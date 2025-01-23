@@ -92,7 +92,7 @@ export function NavUser({ user }: { user: User }) {
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
                                 <Link
-                                    className="flex items-center gap-2"
+                                    className="flex w-full items-center gap-2"
                                     href={route('profile.edit')}
                                 >
                                     <BadgeCheck />
@@ -111,7 +111,7 @@ export function NavUser({ user }: { user: User }) {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <Link
-                                className="flex items-center gap-2"
+                                className="flex w-full items-center gap-2"
                                 href={route('logout')}
                                 method="post"
                                 as="button"
