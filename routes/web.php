@@ -19,9 +19,39 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/account/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/account/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/account/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Projects routes
+    Route::get('/projects/board', function () {
+        return Inertia::render('Dashboard');
+    })->name('projects.board');
+
+    Route::get('/projects/tasks', function () {
+        return Inertia::render('Dashboard');
+    })->name('projects.tasks');
+
+    Route::get('/projects/reports', function () {
+        return Inertia::render('Dashboard');
+    })->name('projects.reports');
+
+    // Documentation routes
+    Route::get('/documentation/getting-started', function () {
+        return Inertia::render('Dashboard');
+    })->name('documentation.getting-started');
+
+    Route::get('/documentation/backend-setup', function () {
+        return Inertia::render('Dashboard');
+    })->name('documentation.backend-setup');
+
+    Route::get('/documentation/frontend-setup', function () {
+        return Inertia::render('Dashboard');
+    })->name('documentation.frontend-setup');
+
+    Route::get('/documentation/changelog', function () {
+        return Inertia::render('Dashboard');
+    })->name('documentation.changelog');
 });
 
 require __DIR__.'/auth.php';
