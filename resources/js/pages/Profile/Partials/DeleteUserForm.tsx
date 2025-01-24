@@ -1,11 +1,15 @@
-import DangerButton from '@/components/DangerButton';
-import InputError from '@/components/InputError';
-import InputLabel from '@/components/InputLabel';
-import Modal from '@/components/Modal';
-import SecondaryButton from '@/components/SecondaryButton';
-import TextInput from '@/components/TextInput';
+import {
+    AlertDialog,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useForm } from '@inertiajs/react';
-import { FormEventHandler, useRef, useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
 export default function DeleteUserForm({
     className = '',
@@ -31,6 +35,12 @@ export default function DeleteUserForm({
         setConfirmingUserDeletion(true);
     };
 
+    useEffect(() => {
+        if (confirmingUserDeletion) {
+            passwordInput.current?.focus();
+        }
+    }, [confirmingUserDeletion]);
+
     const deleteUser: FormEventHandler = (e) => {
         e.preventDefault();
 
@@ -44,19 +54,18 @@ export default function DeleteUserForm({
 
     const closeModal = () => {
         setConfirmingUserDeletion(false);
-
         clearErrors();
         reset();
     };
 
     return (
-        <section className={`space-y-6 ${className}`}>
-            <header>
+        <section className={`flex flex-col gap-6 ${className}`}>
+            <header className="flex flex-col gap-2">
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                     Delete Account
                 </h2>
 
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                     Once your account is deleted, all of its resources and data
                     will be permanently deleted. Before deleting your account,
                     please download any data or information that you wish to
@@ -64,61 +73,89 @@ export default function DeleteUserForm({
                 </p>
             </header>
 
-            <DangerButton onClick={confirmUserDeletion}>
+            <Button
+                variant="destructive"
+                className="w-fit"
+                onClick={confirmUserDeletion}
+            >
                 Delete Account
-            </DangerButton>
+            </Button>
 
-            <Modal show={confirmingUserDeletion} onClose={closeModal}>
-                <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        Are you sure you want to delete your account?
-                    </h2>
+            <AlertDialog
+                open={confirmingUserDeletion}
+                onOpenChange={(open) => {
+                    if (!open) closeModal();
+                }}
+            >
+                <AlertDialogContent>
+                    <form
+                        onSubmit={deleteUser}
+                        className="flex flex-col gap-4 p-2"
+                    >
+                        <AlertDialogTitle className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                            Are you sure you want to delete your account?
+                        </AlertDialogTitle>
 
-                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        Once your account is deleted, all of its resources and
-                        data will be permanently deleted. Please enter your
-                        password to confirm you would like to permanently delete
-                        your account.
-                    </p>
+                        <AlertDialogDescription className="text-sm text-gray-600 dark:text-gray-400">
+                            Once your account is deleted, all of its resources
+                            and data will be permanently deleted. Please enter
+                            your password to confirm you would like to
+                            permanently delete your account.
+                        </AlertDialogDescription>
 
-                    <div className="mt-6">
-                        <InputLabel
-                            htmlFor="password"
-                            value="Password"
-                            className="sr-only"
-                        />
+                        <div className="flex flex-col gap-2">
+                            <Label htmlFor="password">Password</Label>
 
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            ref={passwordInput}
-                            value={data.password}
-                            onChange={(e) =>
-                                setData('password', e.target.value)
-                            }
-                            className="mt-1 block w-3/4"
-                            isFocused
-                            placeholder="Password"
-                        />
+                            <Input
+                                id="password"
+                                type="password"
+                                name="password"
+                                className="max-w-lg"
+                                ref={passwordInput}
+                                value={data.password}
+                                onChange={(e) =>
+                                    setData('password', e.target.value)
+                                }
+                                aria-describedby={
+                                    errors.password
+                                        ? 'password-error'
+                                        : undefined
+                                }
+                                disabled={processing}
+                            />
 
-                        <InputError
-                            message={errors.password}
-                            className="mt-2"
-                        />
-                    </div>
+                            {errors.password && (
+                                <div className="mt-1 text-sm text-red-600 dark:text-red-400">
+                                    {errors.password}
+                                </div>
+                            )}
+                        </div>
 
-                    <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>
-                            Cancel
-                        </SecondaryButton>
+                        <div className="flex justify-end gap-2">
+                            <Button
+                                type="button"
+                                variant="secondary"
+                                onClick={closeModal}
+                                disabled={processing}
+                            >
+                                Cancel
+                            </Button>
 
-                        <DangerButton className="ms-3" disabled={processing}>
-                            Delete Account
-                        </DangerButton>
-                    </div>
-                </form>
-            </Modal>
+                            <Button
+                                type="submit"
+                                variant="destructive"
+                                disabled={processing}
+                                aria-label="Confirm account deletion"
+                            >
+                                {processing && (
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                )}
+                                Delete Account
+                            </Button>
+                        </div>
+                    </form>
+                </AlertDialogContent>
+            </AlertDialog>
         </section>
     );
 }
