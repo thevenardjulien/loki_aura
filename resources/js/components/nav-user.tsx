@@ -5,8 +5,12 @@ import {
     Bell,
     ChevronsUpDown,
     CreditCard,
+    Lock,
     LogOut,
+    Moon,
+    PaintRoller,
     Sparkles,
+    Sun,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -16,7 +20,11 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
+    DropdownMenuPortal,
     DropdownMenuSeparator,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
@@ -27,9 +35,11 @@ import {
 } from '@/components/ui/sidebar';
 import { User } from '@/types';
 import { Link } from '@inertiajs/react';
+import { useTheme } from './theme-provider';
 
 export function NavUser({ user }: { user: User }) {
     const { isMobile } = useSidebar();
+    const { setTheme } = useTheme();
 
     return (
         <SidebarMenu>
@@ -96,8 +106,12 @@ export function NavUser({ user }: { user: User }) {
                                     href={route('profile.edit')}
                                 >
                                     <BadgeCheck />
-                                    Account
+                                    Profile
                                 </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Lock />
+                                Security
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <CreditCard />
@@ -107,6 +121,28 @@ export function NavUser({ user }: { user: User }) {
                                 <Bell />
                                 Notifications
                             </DropdownMenuItem>
+                            <DropdownMenuSub>
+                                <DropdownMenuSubTrigger>
+                                    <PaintRoller />
+                                    <span>Theme</span>
+                                </DropdownMenuSubTrigger>
+                                <DropdownMenuPortal>
+                                    <DropdownMenuSubContent>
+                                        <DropdownMenuItem
+                                            onClick={() => setTheme('light')}
+                                        >
+                                            <Sun />
+                                            <span>Light</span>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem
+                                            onClick={() => setTheme('dark')}
+                                        >
+                                            <Moon />
+                                            <span>Dark</span>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuSubContent>
+                                </DropdownMenuPortal>
+                            </DropdownMenuSub>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>

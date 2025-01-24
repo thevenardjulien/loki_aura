@@ -3,22 +3,17 @@
 import {
     AudioWaveform,
     BookOpen,
-    Bot,
     Command,
-    Frame,
     GalleryVerticalEnd,
+    LayoutDashboard,
     LifeBuoy,
-    Map,
-    PieChart,
     Send,
-    Settings2,
-    SquareTerminal,
 } from 'lucide-react';
 import * as React from 'react';
 
 import { NavMain } from '@/components/nav-main';
-import { NavProjects } from '@/components/nav-projects';
 import { NavSecondary } from '@/components/nav-secondary';
+import { NavTeamMembers } from '@/components/nav-team-members';
 import { NavUser } from '@/components/nav-user';
 import { TeamSwitcher } from '@/components/team-switcher';
 import {
@@ -49,40 +44,26 @@ const data = {
     ],
     navMain: [
         {
-            title: 'Playground',
+            title: 'Dashboard',
             url: '#',
-            icon: SquareTerminal,
+            icon: LayoutDashboard,
             isActive: true,
-            items: [
-                {
-                    title: 'History',
-                    url: '#',
-                },
-                {
-                    title: 'Starred',
-                    url: '#',
-                },
-                {
-                    title: 'Settings',
-                    url: '#',
-                },
-            ],
         },
         {
-            title: 'Models',
+            title: 'Projects',
             url: '#',
-            icon: Bot,
+            icon: GalleryVerticalEnd,
             items: [
                 {
-                    title: 'Genesis',
+                    title: 'Board',
                     url: '#',
                 },
                 {
-                    title: 'Explorer',
+                    title: 'Tasks',
                     url: '#',
                 },
                 {
-                    title: 'Quantum',
+                    title: 'Reports',
                     url: '#',
                 },
             ],
@@ -93,42 +74,19 @@ const data = {
             icon: BookOpen,
             items: [
                 {
-                    title: 'Introduction',
+                    title: 'Getting Started',
                     url: '#',
                 },
                 {
-                    title: 'Get Started',
+                    title: 'Backend Setup',
                     url: '#',
                 },
                 {
-                    title: 'Tutorials',
+                    title: 'Frontend Setup',
                     url: '#',
                 },
                 {
                     title: 'Changelog',
-                    url: '#',
-                },
-            ],
-        },
-        {
-            title: 'Settings',
-            url: '#',
-            icon: Settings2,
-            items: [
-                {
-                    title: 'General',
-                    url: '#',
-                },
-                {
-                    title: 'Team',
-                    url: '#',
-                },
-                {
-                    title: 'Billing',
-                    url: '#',
-                },
-                {
-                    title: 'Limits',
                     url: '#',
                 },
             ],
@@ -146,21 +104,21 @@ const data = {
             icon: Send,
         },
     ],
-    projects: [
+    team_members: [
         {
-            name: 'Design Engineering',
+            name: 'Tylor Otwell',
             url: '#',
-            icon: Frame,
+            isConnected: true,
         },
         {
-            name: 'Sales & Marketing',
+            name: 'Jonathan Reinink',
             url: '#',
-            icon: PieChart,
+            isConnected: false,
         },
         {
-            name: 'Travel',
+            name: 'Adam Wathan',
             url: '#',
-            icon: Map,
+            isConnected: false,
         },
     ],
 };
@@ -175,7 +133,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarHeader>
             <SidebarContent>
                 <NavMain items={data.navMain} />
-                <NavProjects projects={data.projects} />
+                <NavTeamMembers teamMembers={data.team_members} />
                 <NavSecondary items={data.navSecondary} className="mt-auto" />
             </SidebarContent>
             <SidebarFooter>
