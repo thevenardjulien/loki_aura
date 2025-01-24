@@ -45,7 +45,7 @@ const data = {
     navMain: [
         {
             title: 'Dashboard',
-            url: '#',
+            url: '/dashboard',
             icon: LayoutDashboard,
             isActive: true,
         },
@@ -56,15 +56,15 @@ const data = {
             items: [
                 {
                     title: 'Board',
-                    url: '#',
+                    url: '/projects/board',
                 },
                 {
                     title: 'Tasks',
-                    url: '#',
+                    url: '/projects/tasks',
                 },
                 {
                     title: 'Reports',
-                    url: '#',
+                    url: '/projects/reports',
                 },
             ],
         },
@@ -75,19 +75,19 @@ const data = {
             items: [
                 {
                     title: 'Getting Started',
-                    url: '#',
+                    url: '/documentation/getting-started',
                 },
                 {
                     title: 'Backend Setup',
-                    url: '#',
+                    url: '/documentation/backend-setup',
                 },
                 {
                     title: 'Frontend Setup',
-                    url: '#',
+                    url: '/documentation/frontend-setup',
                 },
                 {
                     title: 'Changelog',
-                    url: '#',
+                    url: '/documentation/changelog',
                 },
             ],
         },
@@ -95,12 +95,12 @@ const data = {
     navSecondary: [
         {
             title: 'Support',
-            url: '#',
+            url: '/support',
             icon: LifeBuoy,
         },
         {
             title: 'Feedback',
-            url: '#',
+            url: '/feedback',
             icon: Send,
         },
     ],
