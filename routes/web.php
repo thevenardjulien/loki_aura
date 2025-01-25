@@ -24,6 +24,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/account/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Projects routes
+    Route::get('/projects', function () {
+        return Inertia::render('Dashboard');
+    })->name('projects');
+
     Route::get('/projects/board', function () {
         return Inertia::render('Dashboard');
     })->name('projects.board');
@@ -37,6 +41,10 @@ Route::middleware('auth')->group(function () {
     })->name('projects.reports');
 
     // Documentation routes
+    Route::get('/documentation', function () {
+        return Inertia::render('Dashboard');
+    })->name('documentation');
+
     Route::get('/documentation/getting-started', function () {
         return Inertia::render('Dashboard');
     })->name('documentation.getting-started');
@@ -52,6 +60,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/documentation/changelog', function () {
         return Inertia::render('Dashboard');
     })->name('documentation.changelog');
+
+    // Support routes
+    Route::get('/support', function () {
+        return Inertia::render('Dashboard');
+    })->name('support');
+
+    // Feedback routes
+    Route::get('/feedback', function () {
+        return Inertia::render('Dashboard');
+    })->name('feedback');
 });
 
 require __DIR__.'/auth.php';
