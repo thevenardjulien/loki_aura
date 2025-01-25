@@ -51,7 +51,7 @@ const data = {
         },
         {
             title: 'Projects',
-            url: '#',
+            url: '/projects',
             icon: GalleryVerticalEnd,
             items: [
                 {
@@ -70,7 +70,7 @@ const data = {
         },
         {
             title: 'Documentation',
-            url: '#',
+            url: '/documentation',
             icon: BookOpen,
             items: [
                 {
