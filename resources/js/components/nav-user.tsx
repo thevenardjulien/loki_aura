@@ -93,14 +93,14 @@ export function NavUser({ user }: { user: User }) {
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem disabled>
                                 <Sparkles />
                                 Upgrade to Pro
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem asChild>
                                 <Link
                                     className="flex w-full items-center gap-2"
                                     href={route('profile.edit')}
@@ -109,15 +109,20 @@ export function NavUser({ user }: { user: User }) {
                                     Profile
                                 </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Lock />
-                                Security
+                            <DropdownMenuItem asChild>
+                                <Link
+                                    className="flex w-full items-center gap-2"
+                                    href={route('profile.edit')}
+                                >
+                                    <Lock />
+                                    Security
+                                </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem disabled>
                                 <CreditCard />
                                 Billing
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem disabled>
                                 <Bell />
                                 Notifications
                             </DropdownMenuItem>

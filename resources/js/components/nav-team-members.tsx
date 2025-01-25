@@ -16,6 +16,7 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from '@/components/ui/sidebar';
+import { Link } from '@inertiajs/react';
 
 export function NavTeamMembers({
     teamMembers,
@@ -35,7 +36,7 @@ export function NavTeamMembers({
                 {teamMembers.map((item) => (
                     <SidebarMenuItem key={item.name}>
                         <SidebarMenuButton asChild>
-                            <a href={item.url}>
+                            <Link href={item.url}>
                                 {item.isConnected && (
                                     <div className="h-2 w-2 rounded-full bg-green-500" />
                                 )}
@@ -43,7 +44,7 @@ export function NavTeamMembers({
                                     <div className="h-2 w-2 rounded-full bg-gray-500" />
                                 )}
                                 <span>{item.name}</span>
-                            </a>
+                            </Link>
                         </SidebarMenuButton>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
