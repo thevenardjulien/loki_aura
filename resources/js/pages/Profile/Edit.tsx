@@ -14,18 +14,18 @@ export default function Edit({
             <Head title="Profile" />
 
             <div className="flex max-w-7xl flex-col sm:px-6 lg:px-8">
-                <div className="p-4 shadow sm:p-8">
+                <div className="p-4 sm:p-8">
                     <UpdateProfileInformationForm
                         mustVerifyEmail={mustVerifyEmail}
                         status={status}
                     />
                 </div>
 
-                <div className="p-4 shadow sm:p-8">
+                <div className="p-4 sm:p-8">
                     <UpdatePasswordForm />
                 </div>
 
-                <div className="p-4 shadow sm:p-8">
+                <div className="p-4 sm:p-8">
                     <DeleteUserForm />
                 </div>
             </div>
