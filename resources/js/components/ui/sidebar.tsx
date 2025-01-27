@@ -45,6 +45,12 @@ function useSidebar() {
   return context
 }
 
+const getSidebarStateFromCookie = () => {
+  const cookies = document.cookie.split(';');
+  const sidebarCookie = cookies.find(cookie => cookie.trim().startsWith(`${SIDEBAR_COOKIE_NAME}=`));
+  return sidebarCookie ? sidebarCookie.split('=')[1].trim() === 'true' : true;
+};
+
 const SidebarProvider = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
@@ -55,7 +61,7 @@ const SidebarProvider = React.forwardRef<
 >(
   (
     {
-      defaultOpen = true,
+      defaultOpen = getSidebarStateFromCookie(),
       open: openProp,
       onOpenChange: setOpenProp,
       className,
