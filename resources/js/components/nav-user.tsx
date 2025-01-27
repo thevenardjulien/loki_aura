@@ -103,7 +103,7 @@ export function NavUser({ user }: { user: User }) {
                             <DropdownMenuItem asChild>
                                 <Link
                                     className="flex w-full items-center gap-2"
-                                    href={route('profile.edit')}
+                                    href={route('profile.show')}
                                 >
                                     <BadgeCheck />
                                     Profile
@@ -112,7 +112,7 @@ export function NavUser({ user }: { user: User }) {
                             <DropdownMenuItem asChild>
                                 <Link
                                     className="flex w-full items-center gap-2"
-                                    href={route('profile.edit')}
+                                    href={route('security.show')}
                                 >
                                     <Lock />
                                     Security
