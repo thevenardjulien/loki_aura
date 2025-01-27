@@ -6,9 +6,29 @@
         "dev": "vite",
         "lint": "eslint resources/js --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix"
     },
-    "devDependencies": {
-        "@headlessui/react": "^2.2.0",
+    "dependencies": {
         "@inertiajs/react": "^2.0.3",
+        "@radix-ui/react-alert-dialog": "^1.1.5",
+        "@radix-ui/react-avatar": "^1.1.2",
+        "@radix-ui/react-collapsible": "^1.1.2",
+        "@radix-ui/react-dialog": "^1.1.5",
+        "@radix-ui/react-dropdown-menu": "^2.1.5",
+        "@radix-ui/react-label": "^2.1.1",
+        "@radix-ui/react-separator": "^1.1.1",
+        "@radix-ui/react-slot": "^1.1.1",
+        "@radix-ui/react-tooltip": "^1.1.7",
+        "@radix-ui/react-visually-hidden": "^1.1.1",
+        "axios": "^1.7.9",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "cmdk": "^1.0.0",
+        "lucide-react": "^0.473.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "tailwind-merge": "^2.6.0",
+        "tailwindcss-animate": "^1.0.7"
+    },
+    "devDependencies": {
         "@tailwindcss/forms": "^0.5.10",
         "@types/node": "^18.19.74",
         "@types/react": "^18.3.18",
@@ -17,7 +37,6 @@
         "@typescript-eslint/parser": "^8.21.0",
         "@vitejs/plugin-react": "^4.3.4",
         "autoprefixer": "^10.4.20",
-        "axios": "^1.7.9",
         "concurrently": "^9.1.2",
         "eslint": "^9.18.0",
         "eslint-config-prettier": "^9.1.0",
@@ -29,28 +48,8 @@
         "prettier": "^3.4.2",
         "prettier-plugin-organize-imports": "^4.1.0",
         "prettier-plugin-tailwindcss": "^0.6.11",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
         "tailwindcss": "^3.4.17",
         "typescript": "^5.7.3",
         "vite": "^6.0.11"
-    },
-    "dependencies": {
-        "@radix-ui/react-alert-dialog": "^1.1.5",
-        "@radix-ui/react-avatar": "^1.1.2",
-        "@radix-ui/react-collapsible": "^1.1.2",
-        "@radix-ui/react-dialog": "^1.1.5",
-        "@radix-ui/react-dropdown-menu": "^2.1.5",
-        "@radix-ui/react-label": "^2.1.1",
-        "@radix-ui/react-separator": "^1.1.1",
-        "@radix-ui/react-slot": "^1.1.1",
-        "@radix-ui/react-tooltip": "^1.1.7",
-        "@radix-ui/react-visually-hidden": "^1.1.1",
-        "class-variance-authority": "^0.7.1",
-        "clsx": "^2.1.1",
-        "cmdk": "^1.0.0",
-        "lucide-react": "^0.473.0",
-        "tailwind-merge": "^2.6.0",
-        "tailwindcss-animate": "^1.0.7"
     }
 }
