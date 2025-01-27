@@ -1,7 +1,6 @@
 'use client';
 
 import {
-    AudioWaveform,
     BookOpen,
     Command,
     GalleryVerticalEnd,
@@ -27,19 +26,9 @@ import { usePage } from '@inertiajs/react';
 const data = {
     teams: [
         {
-            name: 'Acme Inc',
-            logo: GalleryVerticalEnd,
-            plan: 'Enterprise',
-        },
-        {
-            name: 'Acme Corp.',
-            logo: AudioWaveform,
-            plan: 'Startup',
-        },
-        {
-            name: 'Evil Corp.',
+            name: 'Default Team',
             logo: Command,
-            plan: 'Free',
+            plan: 'Starter',
         },
     ],
     navMain: [
