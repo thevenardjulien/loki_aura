@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Session;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class SecurityController extends Controller
     {
         return Inertia::render('Security/Show', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => User::where('id', $request->user()->id)->first()->status,
             'sessions' => Session::where('user_id', $request->user()->id)->get(),
         ]);
     }

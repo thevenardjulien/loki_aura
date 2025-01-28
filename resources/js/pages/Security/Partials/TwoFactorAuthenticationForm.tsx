@@ -8,14 +8,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 interface Props {
-    requiresConfirmation: boolean;
+    status: string;
     className?: string;
 }
 
-export function TwoFactorAuthenticationForm({
-    requiresConfirmation,
-    className = '',
-}: Props) {
+export function TwoFactorAuthenticationForm({ status, className = '' }: Props) {
     const [enabling, setEnabling] = useState(false);
     const [confirming, setConfirming] = useState(false);
     const [disabling, setDisabling] = useState(false);
@@ -25,6 +22,8 @@ export function TwoFactorAuthenticationForm({
 
     const page = usePage();
     const user = page.props.auth.user;
+
+    console.log('User:', user);
 
     const form = useForm({
         code: '',
