@@ -1,4 +1,5 @@
 import { AppBreadcrumb } from '@/components/app-breadcrumb';
+import { AppCommand } from '@/components/app-command';
 import { AppSidebar } from '@/components/app-sidebar';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Separator } from '@/components/ui/separator';
@@ -19,7 +20,7 @@ export default function AuthenticatedLayout({
 
     useEffect(() => {
         const down = (e: KeyboardEvent) => {
-            if (e.key === 'j' && (e.metaKey || e.ctrlKey)) {
+            if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
                 e.preventDefault();
                 setOpen((open) => !open);
             }
@@ -49,6 +50,7 @@ export default function AuthenticatedLayout({
                     </div>
                 </SidebarInset>
                 <Toaster position="top-right" richColors />
+                <AppCommand open={open} />
             </SidebarProvider>
         </ThemeProvider>
     );
