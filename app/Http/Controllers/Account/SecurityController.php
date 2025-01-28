@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Account;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Session;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,16 +13,16 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class AccountSecurityController extends Controller
+class SecurityController extends Controller
 {
     /**
      * Display the user's profile form.
      */
     public function show(Request $request): Response
     {
-        return Inertia::render('Profile/Show', [
+        return Inertia::render('Security/Show', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
+            'sessions' => Session::where('user_id', $request->user()->id)->get(),
         ]);
     }
 
