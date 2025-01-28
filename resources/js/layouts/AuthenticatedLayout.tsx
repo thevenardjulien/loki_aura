@@ -7,6 +7,7 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { Toaster } from '@/components/ui/sonner';
 import { useEffect, useState } from 'react';
 
 export default function AuthenticatedLayout({
@@ -47,6 +48,7 @@ export default function AuthenticatedLayout({
                         {children}
                     </div>
                 </SidebarInset>
+                <Toaster position="top-right" richColors />
             </SidebarProvider>
         </ThemeProvider>
     );

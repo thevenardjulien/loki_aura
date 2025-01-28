@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Pencil } from 'lucide-react';
 import { FormEventHandler, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
@@ -46,7 +47,10 @@ export default function UpdateProfileInformation({
         post(route('profile.update'), {
             errorBag: 'updateProfileInformation',
             preserveScroll: true,
-            onSuccess: () => clearPhotoFileInput(),
+            onSuccess: () => {
+                toast.success('Profile updated successfully');
+                clearPhotoFileInput();
+            },
         });
     };
 
@@ -181,12 +185,6 @@ export default function UpdateProfileInformation({
 
                 <div className="flex items-center gap-4">
                     <Button disabled={processing}>Save</Button>
-
-                    {recentlySuccessful && (
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                            Saved.
-                        </p>
-                    )}
                 </div>
             </form>
         </section>
