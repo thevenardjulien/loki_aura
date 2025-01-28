@@ -25,17 +25,15 @@ export default function UpdateProfileInformation({
 
     const user = usePage().props.auth.user;
 
-    const { data, setData, post, errors, processing, recentlySuccessful } =
-        useForm({
-            _method: 'PATCH',
-            name: user.name,
-            email: user.email,
-            photo: null as File | null,
-        });
+    const { data, setData, post, errors, processing } = useForm({
+        _method: 'PATCH',
+        name: user.name,
+        email: user.email,
+        photo: null as File | null,
+    });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
         updateProfileInformation();
     };
 
@@ -45,11 +43,13 @@ export default function UpdateProfileInformation({
         }
 
         post(route('profile.update'), {
-            errorBag: 'updateProfileInformation',
             preserveScroll: true,
             onSuccess: () => {
                 toast.success('Profile updated successfully');
                 clearPhotoFileInput();
+            },
+            onError: (errors) => {
+                toast.error('Something went wrong', errors);
             },
         });
     };

@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
+import { toast } from 'sonner';
 
 export default function UpdatePasswordForm({
     className = '',
@@ -13,15 +14,8 @@ export default function UpdatePasswordForm({
     const passwordInput = useRef<HTMLInputElement>(null);
     const currentPasswordInput = useRef<HTMLInputElement>(null);
 
-    const {
-        data,
-        setData,
-        errors,
-        put,
-        reset,
-        processing,
-        recentlySuccessful,
-    } = useForm({
+    const { data, setData, errors, post, reset, processing } = useForm({
+        _method: 'PUT',
         current_password: '',
         password: '',
         password_confirmation: '',
@@ -30,9 +24,12 @@ export default function UpdatePasswordForm({
     const updatePassword: FormEventHandler = (e) => {
         e.preventDefault();
 
-        put(route('password.update'), {
+        post(route('password.update'), {
             preserveScroll: true,
-            onSuccess: () => reset(),
+            onSuccess: () => {
+                reset();
+                toast.success('Password updated successfully');
+            },
             onError: (errors) => {
                 if (errors.password) {
                     reset('password', 'password_confirmation');
@@ -128,10 +125,6 @@ export default function UpdatePasswordForm({
 
                 <div className="flex items-center gap-4">
                     <Button disabled={processing}>Save</Button>
-
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Saved.
-                    </p>
                 </div>
             </form>
         </section>
