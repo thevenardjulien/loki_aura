@@ -1,9 +1,11 @@
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import InputError from '@/components/ui/input-error';
 import { Label } from '@/components/ui/label';
 import { Link, useForm, usePage } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { Pencil } from 'lucide-react';
+import { FormEventHandler, useRef, useState } from 'react';
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
@@ -14,18 +16,62 @@ export default function UpdateProfileInformation({
     status?: string;
     className?: string;
 }) {
+    // State
+    const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+
+    // Refs
+    const photoInput = useRef<HTMLInputElement>(null);
+
     const user = usePage().props.auth.user;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } =
+    const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
+            _method: 'PATCH',
             name: user.name,
             email: user.email,
+            photo: null as File | null,
         });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        patch(route('profile.update'));
+        updateProfileInformation();
+    };
+
+    const updateProfileInformation = () => {
+        if (photoInput.current?.files?.[0]) {
+            data.photo = photoInput.current.files[0];
+        }
+
+        post(route('profile.update'), {
+            errorBag: 'updateProfileInformation',
+            preserveScroll: true,
+            onSuccess: () => clearPhotoFileInput(),
+        });
+    };
+
+    const selectNewPhoto = () => {
+        photoInput.current!.click();
+    };
+
+    const updatePhotoPreview = () => {
+        const photo = photoInput.current!.files![0];
+
+        if (!photo) return;
+
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            setPhotoPreview(e.target?.result as string | null);
+        };
+
+        reader.readAsDataURL(photo);
+    };
+
+    const clearPhotoFileInput = () => {
+        if (photoInput.current?.value) {
+            photoInput.current.value = '';
+        }
     };
 
     return (
@@ -41,6 +87,44 @@ export default function UpdateProfileInformation({
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
+                <div className="col-span-6 sm:col-span-4">
+                    {/* Hidden file input for photo upload */}
+                    <input
+                        id="photo"
+                        ref={photoInput}
+                        name="photo"
+                        type="file"
+                        className="hidden"
+                        onChange={updatePhotoPreview}
+                        accept="image/*"
+                    />
+
+                    {/* Profile Photo Preview */}
+                    <div className="mt-2 flex items-center gap-4">
+                        <div className="group relative">
+                            <Avatar className="h-20 w-20 rounded-lg">
+                                <AvatarImage
+                                    src={photoPreview || user.profile_photo_url}
+                                    alt={`${user.name}'s profile photo`}
+                                />
+                                <AvatarFallback>
+                                    {user.name.substring(0, 2).toUpperCase()}
+                                </AvatarFallback>
+                            </Avatar>
+
+                            {/* Hover Overlay with Edit Button */}
+                            <div
+                                className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-lg bg-black/50 opacity-0 transition-opacity group-hover:opacity-100"
+                                onClick={selectNewPhoto}
+                            >
+                                <Pencil className="h-5 w-5 text-white" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <InputError className="mt-2">{errors.photo}</InputError>
+                </div>
+
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="name">Name</Label>
 
@@ -98,9 +182,11 @@ export default function UpdateProfileInformation({
                 <div className="flex items-center gap-4">
                     <Button disabled={processing}>Save</Button>
 
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Saved.
-                    </p>
+                    {recentlySuccessful && (
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                            Saved.
+                        </p>
+                    )}
                 </div>
             </form>
         </section>
