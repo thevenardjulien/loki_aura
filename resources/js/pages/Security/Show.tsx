@@ -1,32 +1,27 @@
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout';
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
-import DeleteUserForm from './Partials/DeleteUserForm';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
+import { OpenSessionsForm } from './Partials/OpenSessionsForm';
+import { TwoFactorAuthenticationForm } from './Partials/TwoFactorAuthenticationForm';
 
-export default function Edit({
+export default function Show({
     mustVerifyEmail,
-    status,
-}: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
+    sessions,
+}: PageProps<{ mustVerifyEmail: boolean; sessions: any }>) {
+    console.log(sessions);
     return (
         <AuthenticatedLayout>
             <Head title="Profile" />
 
             <div className="flex max-w-7xl flex-col sm:px-6 lg:px-8">
                 <div className="p-4 sm:p-8">
-                    <UpdateProfileInformationForm
-                        mustVerifyEmail={mustVerifyEmail}
-                        status={status}
+                    <TwoFactorAuthenticationForm
+                        requiresConfirmation={mustVerifyEmail}
                     />
                 </div>
 
                 <div className="p-4 sm:p-8">
-                    <UpdatePasswordForm />
-                </div>
-
-                <div className="p-4 sm:p-8">
-                    <DeleteUserForm />
+                    <OpenSessionsForm sessions={sessions} />
                 </div>
             </div>
         </AuthenticatedLayout>

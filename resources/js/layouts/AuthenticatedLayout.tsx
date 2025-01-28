@@ -49,7 +49,7 @@ export default function AuthenticatedLayout({
                         {children}
                     </div>
                 </SidebarInset>
-                <Toaster position="top-right" richColors />
+                <Toaster position="top-right" />
                 <AppCommand open={open} />
             </SidebarProvider>
         </ThemeProvider>
