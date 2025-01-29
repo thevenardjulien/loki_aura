@@ -16,7 +16,7 @@ export default function Login() {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('login'), {
+        post(route('auth.login'), {
             onFinish: () => reset('password'),
         });
     };
@@ -56,7 +56,7 @@ export default function Login() {
                         <div className="flex items-center">
                             <Label htmlFor="password">Password</Label>
                             <Link
-                                href={route('password.request')}
+                                href={route('auth.forgot-password')}
                                 className="ml-auto text-sm underline-offset-4 hover:underline"
                             >
                                 Forgot your password?
@@ -103,7 +103,7 @@ export default function Login() {
                 <div className="text-center text-sm">
                     Don&apos;t have an account?{' '}
                     <Link
-                        href={route('register')}
+                        href={route('auth.register')}
                         className="underline underline-offset-4"
                     >
                         Sign up

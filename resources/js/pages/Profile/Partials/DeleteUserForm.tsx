@@ -59,7 +59,7 @@ export default function DeleteUserForm({
     };
 
     return (
-        <section className={`flex flex-col gap-6 ${className}`}>
+        <section className={`flex max-w-xl flex-col gap-6 ${className}`}>
             <header className="flex flex-col gap-2">
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                     Delete Account
