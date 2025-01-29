@@ -27,7 +27,7 @@ export function AppCommand({ open = false }: { open: boolean }) {
                 <DialogTitle>Search</DialogTitle>
                 <DialogDescription>Enter your search query</DialogDescription>
             </VisuallyHidden>
-            <Command onValueChange={() => console.log('onValueChange')}>
+            <Command>
                 <CommandInput placeholder="Type a command or search..." />
                 <CommandList>
                     <CommandEmpty>No results found.</CommandEmpty>

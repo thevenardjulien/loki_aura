@@ -8,7 +8,6 @@ export default function Show({
     status,
     sessions,
 }: PageProps<{ status: string; sessions: Session[] }>) {
-    console.log('status: ', status);
     return (
         <AuthenticatedLayout>
             <Head title="Profile" />

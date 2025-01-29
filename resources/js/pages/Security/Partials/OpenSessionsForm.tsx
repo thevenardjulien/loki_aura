@@ -22,8 +22,6 @@ export function OpenSessionsForm({ sessions }: { sessions: Session[] }) {
     const { form, logoutOtherBrowserSessions, isCurrentDevice } =
         useBrowserSessions({ sessions });
 
-    console.log('sessions: ', sessions);
-
     const icon = (session: Session) => {
         if (session.device_type === 'mobile') return <Phone size={20} />;
         if (session.device_type === 'tablet') return <Tablet size={20} />;

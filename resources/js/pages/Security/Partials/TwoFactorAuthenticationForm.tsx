@@ -23,22 +23,11 @@ export function TwoFactorAuthenticationForm({ status, className = '' }: Props) {
     const page = usePage();
     const user = page.props.auth.user;
 
-    console.log('User:', user);
-
     const form = useForm({
         code: '',
     });
 
     const twoFactorEnabled = !enabling && user?.two_factor_enabled;
-
-    useEffect(() => {
-        console.log('QR Code state changed:', qrCode);
-        if (qrCode) {
-            console.log('confirming:', confirming);
-            console.log('twoFactorEnabled:', twoFactorEnabled);
-            console.log('QR Code is now available');
-        }
-    }, [qrCode]);
 
     useEffect(() => {
         if (!twoFactorEnabled) {
@@ -48,16 +37,9 @@ export function TwoFactorAuthenticationForm({ status, className = '' }: Props) {
     }, [twoFactorEnabled]);
 
     const showQrCode = () => {
-        console.log('Fetching QR code...');
-        return axios
-            .get(route('two-factor.qr-code'))
-            .then((response) => {
-                console.log('QR code response:', response.data);
-                setQrCode(response.data.svg);
-            })
-            .catch((error) => {
-                console.error('Error fetching QR code:', error);
-            });
+        return axios.get(route('two-factor.qr-code')).then((response) => {
+            setQrCode(response.data.svg);
+        });
     };
 
     const showSetupKey = () => {
@@ -75,7 +57,6 @@ export function TwoFactorAuthenticationForm({ status, className = '' }: Props) {
     };
 
     const enableTwoFactorAuthentication = () => {
-        console.log('Enabling 2FA...');
         setEnabling(true);
         setConfirming(true);
 
@@ -85,9 +66,6 @@ export function TwoFactorAuthenticationForm({ status, className = '' }: Props) {
             {
                 preserveScroll: true,
                 onSuccess: async () => {
-                    console.log(
-                        '2FA enabled successfully, fetching additional data...',
-                    );
                     try {
                         await Promise.all([
                             showQrCode(),
