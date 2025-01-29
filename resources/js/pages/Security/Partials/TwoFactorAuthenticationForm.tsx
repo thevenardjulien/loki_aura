@@ -1,87 +1,60 @@
 import ConfirmsPassword from '@/components/ConfirmsPassword';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import InputError from '@/components/ui/input-error';
 import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
 import { router, useForm, usePage } from '@inertiajs/react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { CheckCircle } from 'lucide-react';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
-interface Props {
-    status: string;
-    className?: string;
-}
-
-export function TwoFactorAuthenticationForm({ status, className = '' }: Props) {
+export function TwoFactorAuthenticationForm() {
+    // State
     const [enabling, setEnabling] = useState(false);
     const [confirming, setConfirming] = useState(false);
     const [disabling, setDisabling] = useState(false);
     const [qrCode, setQrCode] = useState<string | null>(null);
-    const [setupKey, setSetupKey] = useState<string | null>(null);
     const [recoveryCodes, setRecoveryCodes] = useState<string[]>([]);
 
-    const page = usePage();
-    const user = page.props.auth.user;
-
+    // Hooks
     const form = useForm({
         code: '',
     });
 
-    const twoFactorEnabled = !enabling && user?.two_factor_enabled;
+    const user = usePage().props.auth.user;
+    const twoFactorEnabled = user.two_factor_confirmed_at !== null;
 
-    useEffect(() => {
-        if (!twoFactorEnabled) {
-            form.reset();
-            form.clearErrors();
-        }
-    }, [twoFactorEnabled]);
-
-    const showQrCode = () => {
-        return axios.get(route('two-factor.qr-code')).then((response) => {
-            setQrCode(response.data.svg);
-        });
-    };
-
-    const showSetupKey = () => {
-        return axios.get(route('two-factor.secret-key')).then((response) => {
-            setSetupKey(response.data.secretKey);
-        });
-    };
-
-    const showRecoveryCodes = () => {
-        return axios
-            .get(route('two-factor.recovery-codes'))
-            .then((response) => {
-                setRecoveryCodes(response.data);
-            });
-    };
-
+    // Functions
     const enableTwoFactorAuthentication = () => {
         setEnabling(true);
-        setConfirming(true);
 
         router.post(
             route('two-factor.enable'),
             {},
             {
-                preserveScroll: true,
-                onSuccess: async () => {
-                    try {
-                        await Promise.all([
-                            showQrCode(),
-                            showSetupKey(),
-                            showRecoveryCodes(),
-                        ]);
-                    } catch (error) {
-                        console.error('Error setting up 2FA:', error);
-                    }
+                onSuccess: (all) => {
                     setEnabling(false);
+                    showQrCode();
                 },
             },
         );
     };
 
+    const showQrCode = () => {
+        axios
+            .get(route('two-factor.qr-code'))
+            .then((response) => {
+                setQrCode(response.data.svg);
+            })
+            .then(() => {
+                toast.success('2FA QR Code generated');
+            });
+    };
+
     const confirmTwoFactorAuthentication = () => {
+        setConfirming(true);
+
         form.post(route('two-factor.confirm'), {
             errorBag: 'confirmTwoFactorAuthentication',
             preserveScroll: true,
@@ -89,14 +62,19 @@ export function TwoFactorAuthenticationForm({ status, className = '' }: Props) {
             onSuccess: () => {
                 setConfirming(false);
                 setQrCode(null);
-                setSetupKey(null);
+                showRecoveryCodes();
+                toast.success('2FA successfully enabled');
+            },
+            onError: () => {
+                setConfirming(false);
             },
         });
     };
 
-    const regenerateRecoveryCodes = async () => {
-        await axios.post(route('two-factor.recovery-codes'));
-        showRecoveryCodes();
+    const showRecoveryCodes = () => {
+        axios.get(route('two-factor.recovery-codes')).then((response) => {
+            setRecoveryCodes(response.data);
+        });
     };
 
     const disableTwoFactorAuthentication = () => {
@@ -111,11 +89,13 @@ export function TwoFactorAuthenticationForm({ status, className = '' }: Props) {
         });
     };
 
+    // Effects
+
     return (
-        <section className={cn('flex flex-col gap-6', className)}>
+        <section className={'flex max-w-xl flex-col gap-6'}>
             <header className="flex flex-col gap-2">
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                    Two Factor Authentication
+                    2FA
                 </h2>
 
                 <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -124,87 +104,27 @@ export function TwoFactorAuthenticationForm({ status, className = '' }: Props) {
                 </p>
             </header>
 
-            <div className="flex flex-col gap-4">
-                {twoFactorEnabled && !confirming ? (
-                    <div className="flex flex-col gap-4">
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                            You have enabled two factor authentication.
-                        </h3>
+            {qrCode && (
+                <>
+                    <div className="flex flex-col gap-5">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                            To finish enabling two factor authentication, scan
+                            the following QR code using your phone's
+                            authenticator application or enter the setup key and
+                            provide the generated OTP code.
+                        </p>
 
-                        {recoveryCodes.length > 0 && (
-                            <div className="mt-4 max-w-xl">
-                                <div className="text-sm text-gray-600 dark:text-gray-400">
-                                    Store these recovery codes in a secure
-                                    password manager. They can be used to
-                                    recover access to your account if your two
-                                    factor authentication device is lost.
-                                </div>
-
-                                <div className="mt-4 grid gap-1 rounded-lg bg-gray-100 p-4 font-mono text-sm dark:bg-gray-800">
-                                    {recoveryCodes.map((code) => (
-                                        <div key={code}>{code}</div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        <div className="mt-4 flex gap-2">
-                            <Button
-                                type="button"
-                                onClick={regenerateRecoveryCodes}
-                            >
-                                Regenerate Recovery Codes
-                            </Button>
-
-                            <Button
-                                type="button"
-                                variant="destructive"
-                                onClick={disableTwoFactorAuthentication}
-                                disabled={disabling}
-                            >
-                                {disabling ? 'Disabling...' : 'Disable'}
-                            </Button>
-                        </div>
+                        <div
+                            className="contrast-200"
+                            dangerouslySetInnerHTML={{ __html: qrCode }}
+                        ></div>
                     </div>
-                ) : twoFactorEnabled && confirming ? (
-                    <div className="flex flex-col gap-4">
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                            Finish enabling two factor authentication.
-                        </h3>
 
-                        {qrCode && (
-                            <div>
-                                <div className="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
-                                    <p className="font-semibold">
-                                        To finish enabling two factor
-                                        authentication, scan the following QR
-                                        code using your phone's authenticator
-                                        application or enter the setup key.
-                                    </p>
-                                </div>
+                    <div className="mt-4">
+                        <Label htmlFor="code">Code</Label>
 
-                                <div
-                                    className="mt-4 inline-block bg-white p-2"
-                                    dangerouslySetInnerHTML={{ __html: qrCode }}
-                                />
-
-                                {setupKey && (
-                                    <div className="mt-4 max-w-xl text-sm">
-                                        <p className="font-semibold text-gray-600 dark:text-gray-400">
-                                            Setup Key:{' '}
-                                            <span className="font-mono text-gray-900 dark:text-gray-100">
-                                                {setupKey}
-                                            </span>
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        <div className="mt-4">
-                            <Label htmlFor="code">Code</Label>
-
-                            <div className="mt-2 flex max-w-xl items-center gap-2">
+                        <div className="flex flex-col gap-2">
+                            <div className="flex gap-2">
                                 <Input
                                     id="code"
                                     type="text"
@@ -230,26 +150,15 @@ export function TwoFactorAuthenticationForm({ status, className = '' }: Props) {
                                 </Button>
                             </div>
 
-                            {form.errors.code && (
-                                <p className="mt-2 text-sm text-red-600 dark:text-red-400">
-                                    {form.errors.code}
-                                </p>
-                            )}
+                            <InputError message={form.errors.code} />
                         </div>
                     </div>
-                ) : (
+                </>
+            )}
+
+            {!twoFactorEnabled && !qrCode && (
+                <div className="flex flex-col gap-4">
                     <div className="flex flex-col gap-4">
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                            You have not enabled two factor authentication.
-                        </h3>
-
-                        <div className="text-sm text-gray-600 dark:text-gray-400">
-                            When two factor authentication is enabled, you will
-                            be prompted for a secure, random token during
-                            authentication. You may retrieve this token from
-                            your phone's Google Authenticator application.
-                        </div>
-
                         <ConfirmsPassword
                             onConfirmed={enableTwoFactorAuthentication}
                         >
@@ -258,8 +167,46 @@ export function TwoFactorAuthenticationForm({ status, className = '' }: Props) {
                             </Button>
                         </ConfirmsPassword>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
+
+            {twoFactorEnabled && !qrCode && (
+                <div className="flex flex-col gap-6">
+                    <div className="flex items-center gap-4 text-sm">
+                        <CheckCircle className="text-green-500" />
+                        <h3>You've already enabled 2FA.</h3>
+                    </div>
+                    {recoveryCodes.length > 0 && (
+                        <div className="flex max-w-xl flex-col gap-4">
+                            <div className="text-sm">
+                                <span className="font-semibold text-red-600 dark:text-red-400">
+                                    Important:
+                                </span>{' '}
+                                These recovery codes will only be shown once.
+                                Store them in a secure password manager
+                                immediately. They can be used to recover access
+                                to your account if your two factor
+                                authentication device is lost.
+                            </div>
+
+                            <div className="grid gap-1 rounded-lg bg-sidebar p-4 font-mono text-xs">
+                                {recoveryCodes.map((code) => (
+                                    <div key={code}>{code}</div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    <div className="flex gap-4">
+                        <Button
+                            type="button"
+                            onClick={disableTwoFactorAuthentication}
+                            disabled={disabling}
+                        >
+                            {disabling ? 'Disabling...' : 'Disable'}
+                        </Button>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }

@@ -42,7 +42,7 @@ export function OpenSessionsForm({ sessions }: { sessions: Session[] }) {
                 </header>
 
                 {sessions?.length > 0 && (
-                    <div className="flex max-w-lg flex-col gap-4">
+                    <div className="flex max-w-xl flex-col gap-4">
                         {sessions.map((session, i) => (
                             <div
                                 key={i}
@@ -114,11 +114,13 @@ export function OpenSessionsForm({ sessions }: { sessions: Session[] }) {
                     </div>
                 )}
 
-                <div className="flex items-center">
-                    <Button onClick={() => setOpen(true)}>
-                        Log out all other active sessions
-                    </Button>
-                </div>
+                {sessions.length > 1 && (
+                    <div className="flex items-center">
+                        <Button onClick={() => setOpen(true)}>
+                            Log out all other active sessions
+                        </Button>
+                    </div>
+                )}
             </section>
 
             {/* Password confirmation dialog for all sessions */}

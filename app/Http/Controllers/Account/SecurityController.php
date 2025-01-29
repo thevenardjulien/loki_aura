@@ -23,7 +23,7 @@ class SecurityController extends Controller
     {
         return Inertia::render('Security/Show', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => User::where('id', $request->user()->id)->first()->status,
+            'status' => $request->user()->status,
             'sessions' => Session::where('user_id', $request->user()->id)->get(),
         ]);
     }

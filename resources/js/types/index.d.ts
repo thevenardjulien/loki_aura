@@ -6,7 +6,7 @@ export interface User {
     email: string;
     email_verified_at?: string;
     profile_photo_url: string | undefined;
-    two_factor_enabled: boolean;
+    two_factor_confirmed_at: string | null;
 }
 
 interface Session {

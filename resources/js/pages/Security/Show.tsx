@@ -14,7 +14,7 @@ export default function Show({
 
             <div className="flex max-w-7xl flex-col sm:px-6 lg:px-8">
                 <div className="p-4 sm:p-8">
-                    <TwoFactorAuthenticationForm status={status} />
+                    <TwoFactorAuthenticationForm />
                 </div>
 
                 <div className="p-4 sm:p-8">
