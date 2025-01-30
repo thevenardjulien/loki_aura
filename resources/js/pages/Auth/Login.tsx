@@ -16,7 +16,7 @@ export default function Login() {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('auth.login'), {
+        post(route('login'), {
             onFinish: () => reset('password'),
         });
     };
@@ -103,7 +103,7 @@ export default function Login() {
                 <div className="text-center text-sm">
                     Don&apos;t have an account?{' '}
                     <Link
-                        href={route('auth.register')}
+                        href={route('register')}
                         className="underline underline-offset-4"
                     >
                         Sign up

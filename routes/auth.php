@@ -7,11 +7,11 @@ use Inertia\Inertia;
 Route::middleware('guest')->group(function () {
     Route::get('/register', function () {
         return Inertia::render('Auth/Register');
-    })->name('auth.register');
+    })->name('register');
 
     Route::get('/login', function () {
         return Inertia::render('Auth/Login');
-    })->name('auth.login');
+    })->name('login');
 
     Route::get('/login/challenge', function () {
         return Inertia::render('Auth/TwoFactorChallenge');
