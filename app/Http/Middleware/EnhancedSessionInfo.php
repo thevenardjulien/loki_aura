@@ -15,8 +15,6 @@ class EnhancedSessionInfo
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $response = $next($request);
-
         if ($request->hasSession() && $request->session()->getId()) {
             $agent = new Agent();
             $agent->setUserAgent($request->userAgent());
@@ -38,7 +36,7 @@ class EnhancedSessionInfo
                     'device_type' => $this->getDeviceType($agent),
                     'real_ip' => $realIp,
                     'location' => $this->getLocationFromIp($realIp),
-                    'last_activity' => now()->diffForHumans(),
+                    'last_activity' => now(),
                     'device_details' => json_encode([
                         'is_mobile' => $agent->isMobile(),
                         'is_tablet' => $agent->isTablet(),
@@ -49,7 +47,7 @@ class EnhancedSessionInfo
                 ]);
         }
 
-        return $response;
+        return $next($request);
     }
 
     /**
