@@ -1,4 +1,4 @@
-import ConfirmsPassword from '@/components/ConfirmsPassword';
+import ConfirmsPassword from '@/components/confirm-witn-password';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import InputError from '@/components/ui/input-error';
@@ -80,11 +80,21 @@ export function TwoFactorAuthenticationForm() {
     const disableTwoFactorAuthentication = () => {
         setDisabling(true);
 
-        router.delete(route('two-factor.disable'), {
+        form.delete(route('two-factor.disable'), {
             preserveScroll: true,
+            preserveState: true,
+            onBefore: () => {
+                setDisabling(true);
+            },
             onSuccess: () => {
                 setDisabling(false);
                 setConfirming(false);
+            },
+            onError: () => {
+                setDisabling(false);
+            },
+            onFinish: () => {
+                setDisabling(false);
             },
         });
     };
@@ -160,6 +170,8 @@ export function TwoFactorAuthenticationForm() {
                 <div className="flex flex-col gap-4">
                     <div className="flex flex-col gap-4">
                         <ConfirmsPassword
+                            title="Enable 2FA"
+                            content="To start enabling two-factor authentication, you must confirm your password."
                             onConfirmed={enableTwoFactorAuthentication}
                         >
                             <Button type="button" disabled={enabling}>
@@ -197,13 +209,15 @@ export function TwoFactorAuthenticationForm() {
                         </div>
                     )}
                     <div className="flex gap-4">
-                        <Button
-                            type="button"
-                            onClick={disableTwoFactorAuthentication}
-                            disabled={disabling}
+                        <ConfirmsPassword
+                            title="Disable 2FA"
+                            content="To disable two-factor authentication, you must confirm your password."
+                            onConfirmed={disableTwoFactorAuthentication}
                         >
-                            {disabling ? 'Disabling...' : 'Disable'}
-                        </Button>
+                            <Button type="button" disabled={disabling}>
+                                {disabling ? 'Disabling...' : 'Disable'}
+                            </Button>
+                        </ConfirmsPassword>
                     </div>
                 </div>
             )}
