@@ -20,8 +20,8 @@ interface ConfirmsPasswordProps {
 }
 
 export default function ConfirmsPassword({
-    title = 'Confirm Password',
-    content = 'For your security, please confirm your password to continue.',
+    title = 'Confirm action with Password',
+    content = 'This action is irreversible. Please type your password to confirm.',
     button = 'Confirm',
     children,
     onConfirmed,
@@ -80,7 +80,12 @@ export default function ConfirmsPassword({
         <>
             <span onClick={startConfirmingPassword}>{children}</span>
 
-            <Dialog open={confirmingPassword} onOpenChange={closeModal}>
+            <Dialog
+                open={confirmingPassword}
+                onOpenChange={(open) => {
+                    if (!open) closeModal();
+                }}
+            >
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>{title}</DialogTitle>
@@ -102,7 +107,6 @@ export default function ConfirmsPassword({
                                         password: e.target.value,
                                     }))
                                 }
-                                className="mt-1 block w-3/4"
                                 placeholder="Password"
                                 autoComplete="current-password"
                                 onKeyUp={(e) => {
