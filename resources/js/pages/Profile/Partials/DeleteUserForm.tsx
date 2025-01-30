@@ -1,10 +1,10 @@
-import {
-    AlertDialog,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from '@inertiajs/react';
@@ -46,9 +46,15 @@ export default function DeleteUserForm({
 
         destroy(route('profile.destroy'), {
             preserveScroll: true,
-            onSuccess: () => closeModal(),
-            onError: () => passwordInput.current?.focus(),
-            onFinish: () => reset(),
+            onSuccess: () => {
+                closeModal();
+            },
+            onError: () => {
+                passwordInput.current?.focus();
+            },
+            onFinish: () => {
+                reset();
+            },
         });
     };
 
@@ -81,23 +87,23 @@ export default function DeleteUserForm({
                 Delete Account
             </Button>
 
-            <AlertDialog
+            <Dialog
                 open={confirmingUserDeletion}
                 onOpenChange={(open) => {
                     if (!open) closeModal();
                 }}
             >
-                <AlertDialogContent>
-                    <AlertDialogTitle className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                <DialogContent>
+                    <DialogTitle className="text-lg font-medium text-gray-900 dark:text-gray-100">
                         Are you sure you want to delete your account?
-                    </AlertDialogTitle>
+                    </DialogTitle>
 
-                    <AlertDialogDescription className="text-sm text-gray-600 dark:text-gray-400">
+                    <DialogDescription className="text-sm text-gray-600 dark:text-gray-400">
                         Once your account is deleted, all of its resources and
                         data will be permanently deleted. Please enter your
                         password to confirm you would like to permanently delete
                         your account.
-                    </AlertDialogDescription>
+                    </DialogDescription>
 
                     <form
                         onSubmit={deleteUser}
@@ -154,8 +160,8 @@ export default function DeleteUserForm({
                             </Button>
                         </div>
                     </form>
-                </AlertDialogContent>
-            </AlertDialog>
+                </DialogContent>
+            </Dialog>
         </section>
     );
 }
