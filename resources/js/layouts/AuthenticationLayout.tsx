@@ -6,7 +6,7 @@ export default function AuthenticationLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="grid min-h-svh lg:grid-cols-2">
+        <div className="grid min-h-svh">
             <div className="flex flex-col gap-4 bg-background p-6 md:p-10">
                 <div className="flex justify-center gap-2 md:justify-start">
                     <a href="#" className="flex items-center gap-2 font-medium">
@@ -20,7 +20,6 @@ export default function AuthenticationLayout({
                     <div className="w-full max-w-xs">{children}</div>
                 </div>
             </div>
-            <div className="relative hidden bg-primary-foreground lg:block"></div>
         </div>
     );
 }
