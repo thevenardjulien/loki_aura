@@ -13,14 +13,39 @@ import InputError from '@/components/ui/input-error';
 import { Label } from '@/components/ui/label';
 import { useBrowserSessions } from '@/hooks/useBrowserSessions';
 import { Session } from '@/types';
+import { useForm } from '@inertiajs/react';
 import { Monitor, Phone, Tablet } from 'lucide-react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
-export function OpenSessionsForm({ sessions }: { sessions: Session[] }) {
+export function OpenSessionsForm({ sessions = [] }: { sessions?: Session[] }) {
     const [open, setOpen] = useState(false);
 
-    const { form, logoutOtherBrowserSessions, isCurrentDevice } =
-        useBrowserSessions({ sessions });
+    const { isCurrentDevice } = useBrowserSessions();
+
+    // If sessions is undefined, show a loading state or return null
+    if (!sessions) {
+        return null;
+    }
+
+    // Form
+    const form = useForm({
+        password: '',
+    });
+
+    const handleLogoutOtherSessions = (e: React.FormEvent) => {
+        e.preventDefault();
+        form.delete(route('other-browser-sessions.destroy'), {
+            preserveScroll: true,
+            onSuccess: () => {
+                setOpen(false);
+                toast.success('Other browser sessions have been logged out.');
+            },
+            onError: () => {
+                form.reset();
+            },
+        });
+    };
 
     const icon = (session: Session) => {
         if (session.device_type === 'mobile') return <Phone size={20} />;
@@ -81,7 +106,7 @@ export function OpenSessionsForm({ sessions }: { sessions: Session[] }) {
                                                     <span>OS: </span>
                                                     <span className="text-gray-500">
                                                         {session.os}{' '}
-                                                        {session.os_version.replaceAll(
+                                                        {session.os_version?.replaceAll(
                                                             '_',
                                                             '.',
                                                         )}
@@ -135,7 +160,7 @@ export function OpenSessionsForm({ sessions }: { sessions: Session[] }) {
                         devices.
                     </DialogDescription>
 
-                    <form onSubmit={logoutOtherBrowserSessions}>
+                    <form onSubmit={handleLogoutOtherSessions}>
                         <div className="flex flex-col gap-2">
                             <Label htmlFor="password">Password</Label>
                             <Input
@@ -163,11 +188,7 @@ export function OpenSessionsForm({ sessions }: { sessions: Session[] }) {
                                     Cancel
                                 </Button>
                             </DialogClose>
-                            <Button
-                                type="submit"
-                                variant="destructive"
-                                disabled={form.processing}
-                            >
+                            <Button type="submit" disabled={form.processing}>
                                 Log out all other sessions
                             </Button>
                         </DialogFooter>
