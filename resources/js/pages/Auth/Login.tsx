@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthenticationLayout from '@/layouts/AuthenticationLayout';
-import { cn } from '@/lib/utils';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
@@ -24,7 +23,7 @@ export default function Login() {
     return (
         <AuthenticationLayout>
             <Head title="Login" />
-            <form className={cn('flex flex-col gap-6')} onSubmit={submit}>
+            <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="flex flex-col items-center gap-2 text-center">
                     <h1 className="text-2xl font-bold">
                         Login to your account
@@ -50,18 +49,11 @@ export default function Login() {
                             placeholder="m@example.com"
                             required
                             onChange={(e) => setData('email', e.target.value)}
+                            autoFocus
                         />
                     </div>
                     <div className="grid gap-2">
-                        <div className="flex items-center">
-                            <Label htmlFor="password">Password</Label>
-                            <Link
-                                href={route('auth.forgot-password')}
-                                className="ml-auto text-sm underline-offset-4 hover:underline"
-                            >
-                                Forgot your password?
-                            </Link>
-                        </div>
+                        <Label htmlFor="password">Password</Label>
                         <Input
                             id="password"
                             type="password"
@@ -82,6 +74,14 @@ export default function Login() {
                     >
                         Login
                     </Button>
+                    <div className="text-center text-sm">
+                        <Link
+                            href={route('auth.forgot-password')}
+                            className="underline underline-offset-4"
+                        >
+                            Forgot your password?
+                        </Link>
+                    </div>
                     <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                         <span className="relative z-10 bg-background px-2 text-muted-foreground">
                             Or continue with
