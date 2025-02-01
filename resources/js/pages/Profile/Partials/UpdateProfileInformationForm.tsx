@@ -3,18 +3,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import InputError from '@/components/ui/input-error';
 import { Label } from '@/components/ui/label';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { Pencil } from 'lucide-react';
 import { FormEventHandler, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 export default function UpdateProfileInformation({
-    mustVerifyEmail,
-    status,
     className = '',
 }: {
-    mustVerifyEmail: boolean;
-    status?: string;
     className?: string;
 }) {
     // State
@@ -111,7 +107,7 @@ export default function UpdateProfileInformation({
                                     src={photoPreview || user.profile_photo_url}
                                     alt={`${user.name}'s profile photo`}
                                 />
-                                <AvatarFallback>
+                                <AvatarFallback className="h-20 w-20 rounded-lg text-2xl">
                                     {user.name.substring(0, 2).toUpperCase()}
                                 </AvatarFallback>
                             </Avatar>
@@ -159,29 +155,6 @@ export default function UpdateProfileInformation({
 
                     <InputError className="mt-2" message={errors.email} />
                 </div>
-
-                {mustVerifyEmail && user.email_verified_at === null && (
-                    <div>
-                        <p className="mt-2 text-sm text-gray-800 dark:text-gray-200">
-                            Your email address is unverified.
-                            <Link
-                                href={route('verification.send')}
-                                method="post"
-                                as="button"
-                                className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-                            >
-                                Click here to re-send the verification email.
-                            </Link>
-                        </p>
-
-                        {status === 'verification-link-sent' && (
-                            <div className="mt-2 text-sm font-medium text-green-600 dark:text-green-400">
-                                A new verification link has been sent to your
-                                email address.
-                            </div>
-                        )}
-                    </div>
-                )}
 
                 <div className="flex items-center gap-4">
                     <Button disabled={processing}>Save</Button>
