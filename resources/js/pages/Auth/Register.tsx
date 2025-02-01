@@ -52,6 +52,7 @@ export default function Register() {
                             placeholder="Enter your name"
                             required
                             onChange={(e) => setData('name', e.target.value)}
+                            autoFocus
                         />
                     </div>
                 </div>
