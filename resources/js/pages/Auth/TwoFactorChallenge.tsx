@@ -22,13 +22,12 @@ export default function TwoFactorChallenge() {
     return (
         <AuthenticationLayout>
             <Head title="Login" />
-            <div className="flex flex-col items-center gap-4 text-center">
-                <ShieldCheck className="size-10" />
-                <h1 className="text-lg font-bold">OTP Code</h1>
-                <p className="text-balance text-sm text-muted-foreground">
-                    Please enter the one-time password sent to your
-                    Authenticator app.
-                </p>
+            <div className="flex flex-col items-center gap-6 text-center">
+                <div className="flex flex-col items-center gap-2">
+                    <ShieldCheck className="size-10" />
+                    <h1 className="text-lg font-bold">OTP Code</h1>
+                </div>
+
                 <InputOTP
                     value={data.code}
                     maxLength={6}
@@ -45,6 +44,11 @@ export default function TwoFactorChallenge() {
                         <InputOTPSlot index={5} />
                     </InputOTPGroup>
                 </InputOTP>
+
+                <p className="text-balance text-sm text-muted-foreground">
+                    Please enter the one-time password sent to your
+                    Authenticator app.
+                </p>
 
                 {errors && <InputError message={errors.code} />}
             </div>
