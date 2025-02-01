@@ -14,36 +14,42 @@ export default function VerifyEmail({ status }: { status?: string }) {
 
     return (
         <AuthenticationLayout>
-            <Head title="Email Verification" />
+            <Head title="Verify Email" />
 
-            <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-                Thanks for signing up! Before getting started, could you verify
-                your email address by clicking on the link we just emailed to
-                you? If you didn't receive the email, we will gladly send you
-                another.
-            </div>
-
-            {status === 'verification-link-sent' && (
-                <div className="mb-4 text-sm font-medium text-green-600 dark:text-green-400">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
+            <form className="flex flex-col gap-6" onSubmit={submit}>
+                <div className="flex flex-col items-center gap-4 text-center">
+                    <h1 className="text-2xl font-bold">Verify your email</h1>
+                    <p className="text-balance text-sm text-muted-foreground">
+                        Please verify your email address by clicking the link in the email we sent you.
+                        If you haven't received it, we can send a new verification link.
+                    </p>
                 </div>
-            )}
 
-            <form onSubmit={submit}>
-                <div className="mt-4 flex items-center justify-between">
-                    <Button disabled={processing}>
-                        Resend Verification Email
+                {status === 'verification-link-sent' && (
+                    <div className="text-center text-sm font-medium text-green-600 dark:text-green-400">
+                        A new verification link has been sent to your email address.
+                    </div>
+                )}
+
+                <div className="grid gap-6">
+                    <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={processing}
+                    >
+                        Resend verification link
                     </Button>
 
-                    <Link
-                        href={route('logout')}
-                        method="post"
-                        as="button"
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-                    >
-                        Log Out
-                    </Link>
+                    <div className="text-center text-sm">
+                        <Link
+                            href={route('logout')}
+                            method="post"
+                            as="button"
+                            className="underline underline-offset-4"
+                        >
+                            Log out
+                        </Link>
+                    </div>
                 </div>
             </form>
         </AuthenticationLayout>
