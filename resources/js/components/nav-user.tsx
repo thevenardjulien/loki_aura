@@ -56,7 +56,7 @@ export function NavUser({ user }: { user: User }) {
                                     src={user.profile_photo_url}
                                 />
                                 <AvatarFallback className="rounded-lg">
-                                    FJL
+                                    {user.name.substring(0, 2).toUpperCase()}
                                 </AvatarFallback>
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
@@ -84,7 +84,9 @@ export function NavUser({ user }: { user: User }) {
                                         src={user.profile_photo_url}
                                     />
                                     <AvatarFallback className="rounded-lg">
-                                        CN
+                                        {user.name
+                                            .substring(0, 2)
+                                            .toUpperCase()}
                                     </AvatarFallback>
                                 </Avatar>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
