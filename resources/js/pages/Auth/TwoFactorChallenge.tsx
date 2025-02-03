@@ -25,7 +25,9 @@ export default function TwoFactorChallenge() {
             <div className="flex flex-col items-center gap-6 text-center">
                 <div className="flex flex-col items-center gap-2">
                     <ShieldCheck className="size-10" />
-                    <h1 className="text-lg font-bold">OTP Code</h1>
+                    <h1 className="text-lg font-bold">
+                        Two-Factor Authentication
+                    </h1>
                 </div>
 
                 <InputOTP

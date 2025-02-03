@@ -11,7 +11,7 @@ import {
 import { Input } from '@/components/ui/input';
 import InputError from '@/components/ui/input-error';
 import { Label } from '@/components/ui/label';
-import { useBrowserSessions } from '@/hooks/useBrowserSessions';
+import { useBrowserSessions } from '@/hooks/use-browser-sessions';
 import { Session } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { Monitor, Phone, Tablet } from 'lucide-react';
@@ -160,13 +160,17 @@ export function OpenSessionsForm({ sessions = [] }: { sessions?: Session[] }) {
                         devices.
                     </DialogDescription>
 
-                    <form onSubmit={handleLogoutOtherSessions}>
+                    <form
+                        onSubmit={handleLogoutOtherSessions}
+                        className="flex flex-col gap-4"
+                    >
                         <div className="flex flex-col gap-2">
                             <Label htmlFor="password">Password</Label>
                             <Input
                                 type="password"
                                 id="password"
                                 value={form.data.password}
+                                autoComplete="current-password"
                                 onChange={(e) =>
                                     form.setData('password', e.target.value)
                                 }
@@ -178,7 +182,7 @@ export function OpenSessionsForm({ sessions = [] }: { sessions?: Session[] }) {
                             />
                         </div>
 
-                        <DialogFooter className="mt-6">
+                        <DialogFooter>
                             <DialogClose asChild>
                                 <Button
                                     type="button"

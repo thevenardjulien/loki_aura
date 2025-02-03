@@ -105,10 +105,7 @@ export default function DeleteUserForm({
                         your account.
                     </DialogDescription>
 
-                    <form
-                        onSubmit={deleteUser}
-                        className="flex flex-col gap-4 p-2"
-                    >
+                    <form onSubmit={deleteUser} className="flex flex-col gap-4">
                         <div className="flex flex-col gap-2">
                             <Label htmlFor="password">Password</Label>
 
@@ -119,6 +116,7 @@ export default function DeleteUserForm({
                                 className="max-w-lg"
                                 ref={passwordInput}
                                 value={data.password}
+                                autoFocus
                                 onChange={(e) =>
                                     setData('password', e.target.value)
                                 }

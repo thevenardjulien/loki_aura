@@ -1,11 +1,11 @@
-import ConfirmsPassword from '@/components/confirm-witn-password';
+import ConfirmsPassword from '@/components/confirm-with-password';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import InputError from '@/components/ui/input-error';
 import { Label } from '@/components/ui/label';
 import { router, useForm, usePage } from '@inertiajs/react';
 import axios from 'axios';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, Siren } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -167,18 +167,23 @@ export function TwoFactorAuthenticationForm() {
             )}
 
             {!twoFactorEnabled && !qrCode && (
-                <div className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-4">
-                        <ConfirmsPassword
-                            title="Enable 2FA"
-                            content="To start enabling two-factor authentication, you must confirm your password."
-                            onConfirmed={enableTwoFactorAuthentication}
-                        >
-                            <Button type="button" disabled={enabling}>
-                                {enabling ? 'Enabling...' : 'Enable'}
-                            </Button>
-                        </ConfirmsPassword>
+                <div className="flex flex-col gap-6">
+                    <div className="flex items-center gap-4 text-sm">
+                        <Siren className="text-red-500" />
+                        <h3>
+                            Two-factor authentication is not enabled. We
+                            recommend enabling it.
+                        </h3>
                     </div>
+                    <ConfirmsPassword
+                        title="Enable 2FA"
+                        content="To start enabling two-factor authentication, you must confirm your password."
+                        onConfirmed={enableTwoFactorAuthentication}
+                    >
+                        <Button type="button" disabled={enabling}>
+                            {enabling ? 'Enabling...' : 'Enable'}
+                        </Button>
+                    </ConfirmsPassword>
                 </div>
             )}
 
