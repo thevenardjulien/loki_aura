@@ -1,4 +1,14 @@
 {
+    "name": "laravel-inertia-react-starter",
+    "version": "0.1.0",
+    "description": "The Laravel Inertia React Starter",
+    "keywords": [
+        "laravel",
+        "inertia",
+        "react",
+        "shadcn-ui"
+    ],
+    "license": "MIT",
     "private": true,
     "type": "module",
     "scripts": {
@@ -36,8 +46,8 @@
         "@types/node": "^18.19.74",
         "@types/react": "^18.3.18",
         "@types/react-dom": "^18.3.5",
-        "@typescript-eslint/eslint-plugin": "^8.22.0",
-        "@typescript-eslint/parser": "^8.22.0",
+        "@typescript-eslint/eslint-plugin": "^8.23.0",
+        "@typescript-eslint/parser": "^8.23.0",
         "@vitejs/plugin-react": "^4.3.4",
         "autoprefixer": "^10.4.20",
         "concurrently": "^9.1.2",
