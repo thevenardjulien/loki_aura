@@ -1,11 +1,13 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "ferjal0/laravel-inertia-react-starter",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "The Laravel Inertia React Starter",
     "keywords": [
         "laravel",
-        "framework"
+        "inertia",
+        "react",
+        "shadcn-ui"
     ],
     "license": "MIT",
     "require": {
