@@ -2,14 +2,17 @@ import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import InputError from '@/components/ui/input-error';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import axios from 'axios';
 import { useRef, useState } from 'react';
+import { Label } from './ui/label';
 
 interface ConfirmsPasswordProps {
     title?: string;
@@ -89,17 +92,22 @@ export default function ConfirmsPassword({
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>{title}</DialogTitle>
+                        <VisuallyHidden>
+                            <DialogDescription>{content}</DialogDescription>
+                        </VisuallyHidden>
                     </DialogHeader>
 
-                    <div className="mt-4">
+                    <div className="flex flex-col gap-4">
                         <p className="text-sm text-gray-600 dark:text-gray-400">
                             {content}
                         </p>
 
-                        <div className="mt-4">
+                        <div className="flex flex-col gap-2">
+                            <Label htmlFor="password">Password</Label>
                             <Input
                                 ref={passwordInput}
                                 type="password"
+                                id="password"
                                 value={form.password}
                                 onChange={(e) =>
                                     setForm((prev) => ({
@@ -107,7 +115,6 @@ export default function ConfirmsPassword({
                                         password: e.target.value,
                                     }))
                                 }
-                                placeholder="Password"
                                 autoComplete="current-password"
                                 onKeyUp={(e) => {
                                     if (e.key === 'Enter') {
@@ -115,9 +122,9 @@ export default function ConfirmsPassword({
                                     }
                                 }}
                             />
-
-                            <InputError message={form.error} className="mt-2" />
                         </div>
+
+                        <InputError message={form.error} />
                     </div>
 
                     <DialogFooter>
