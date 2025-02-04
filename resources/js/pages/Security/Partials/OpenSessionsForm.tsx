@@ -23,12 +23,10 @@ export function OpenSessionsForm({ sessions = [] }: { sessions?: Session[] }) {
 
     const { isCurrentDevice } = useBrowserSessions();
 
-    // If sessions is undefined, show a loading state or return null
     if (!sessions) {
         return null;
     }
 
-    // Form
     const form = useForm({
         password: '',
     });
