@@ -40,43 +40,43 @@ const data = {
         },
         {
             title: 'Projects',
-            url: '/projects',
+            url: '/dashboard',
             icon: GalleryVerticalEnd,
             items: [
                 {
                     title: 'Board',
-                    url: '/projects/board',
+                    url: '/dashboard',
                 },
                 {
                     title: 'Tasks',
-                    url: '/projects/tasks',
+                    url: '/dashboard',
                 },
                 {
                     title: 'Reports',
-                    url: '/projects/reports',
+                    url: '/dashboard',
                 },
             ],
         },
         {
             title: 'Documentation',
-            url: '/documentation',
+            url: '/dashboard',
             icon: BookOpen,
             items: [
                 {
                     title: 'Getting Started',
-                    url: '/documentation/getting-started',
+                    url: '/dashboard',
                 },
                 {
                     title: 'Backend Setup',
-                    url: '/documentation/backend-setup',
+                    url: '/dashboard',
                 },
                 {
                     title: 'Frontend Setup',
-                    url: '/documentation/frontend-setup',
+                    url: '/dashboard',
                 },
                 {
                     title: 'Changelog',
-                    url: '/documentation/changelog',
+                    url: '/dashboard',
                 },
             ],
         },
@@ -84,12 +84,12 @@ const data = {
     navSecondary: [
         {
             title: 'Support',
-            url: '/support',
+            url: '/dashboard',
             icon: LifeBuoy,
         },
         {
             title: 'Feedback',
-            url: '/feedback',
+            url: '/dashboard',
             icon: Send,
         },
     ],
