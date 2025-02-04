@@ -12,7 +12,6 @@ import { toast } from 'sonner';
 export function TwoFactorAuthenticationForm() {
     // State
     const [enabling, setEnabling] = useState(false);
-    const [confirming, setConfirming] = useState(false);
     const [disabling, setDisabling] = useState(false);
     const [qrCode, setQrCode] = useState<string | null>(null);
     const [recoveryCodes, setRecoveryCodes] = useState<string[]>([]);
@@ -53,20 +52,17 @@ export function TwoFactorAuthenticationForm() {
     };
 
     const confirmTwoFactorAuthentication = () => {
-        setConfirming(true);
-
         form.post(route('two-factor.confirm'), {
             errorBag: 'confirmTwoFactorAuthentication',
             preserveScroll: true,
             preserveState: true,
             onSuccess: () => {
-                setConfirming(false);
                 setQrCode(null);
                 showRecoveryCodes();
                 toast.success('2FA successfully enabled');
             },
             onError: () => {
-                setConfirming(false);
+                toast.error('There was an error enabling 2FA');
             },
         });
     };
@@ -88,7 +84,6 @@ export function TwoFactorAuthenticationForm() {
             },
             onSuccess: () => {
                 setDisabling(false);
-                setConfirming(false);
             },
             onError: () => {
                 setDisabling(false);
