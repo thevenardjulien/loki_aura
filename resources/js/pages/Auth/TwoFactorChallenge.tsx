@@ -23,9 +23,9 @@ export default function TwoFactorChallenge() {
         <AuthenticationLayout>
             <Head title="Login" />
             <div className="flex flex-col items-center gap-6 text-center">
-                <div className="flex flex-col items-center gap-2">
-                    <ShieldCheck className="size-10" />
-                    <h1 className="text-lg font-bold">
+                <div className="flex flex-col items-center gap-4">
+                    <ShieldCheck className="size-12" />
+                    <h1 className="text-2xl font-bold">
                         Two-Factor Authentication
                     </h1>
                 </div>
@@ -48,8 +48,8 @@ export default function TwoFactorChallenge() {
                 </InputOTP>
 
                 <p className="text-balance text-sm text-muted-foreground">
-                    Please enter the one-time password sent to your
-                    Authenticator app.
+                    Please enter the one-time password from your authenticator
+                    app.
                 </p>
 
                 {errors && <InputError message={errors.code} />}

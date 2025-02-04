@@ -11,7 +11,6 @@ export default function Welcome({ auth }: PageProps) {
             <div className="flex h-svh flex-col">
                 <header>
                     <div className="mx-auto flex max-w-7xl items-center justify-between p-6 md:p-10">
-                        {/* Logo */}
                         <a
                             href="#"
                             className="flex items-center gap-2 font-medium"
@@ -22,7 +21,6 @@ export default function Welcome({ auth }: PageProps) {
                             React Inertia
                         </a>
 
-                        {/* Navigation Links */}
                         <nav className="flex items-center gap-4">
                             {auth.user ? (
                                 <Link
@@ -51,7 +49,6 @@ export default function Welcome({ auth }: PageProps) {
                     </div>
                 </header>
 
-                {/* Main Content */}
                 <main className="mx-auto h-full w-full max-w-7xl grow">
                     <div className="relative flex h-full items-center justify-center">
                         <p className="text-[clamp(1.5rem,5vw,4rem)] leading-none">

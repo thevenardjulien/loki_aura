@@ -3,14 +3,19 @@
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Laravel\Fortify\Features;
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', function () {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Auth/Register', [
+            'isRegisterEnabled' => Features::enabled(Features::registration()),
+        ]);
     })->name('register');
 
     Route::get('/login', function () {
-        return Inertia::render('Auth/Login');
+        return Inertia::render('Auth/Login', [
+            'isRegisterEnabled' => Features::enabled(Features::registration()),
+        ]);
     })->name('login');
 
     Route::get('/login/challenge', function () {

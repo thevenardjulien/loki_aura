@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Session;
-use App\Models\User;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Laravel\Fortify\Features;
 
 class SecurityController extends Controller
 {
@@ -22,9 +21,8 @@ class SecurityController extends Controller
     public function show(Request $request): Response
     {
         return Inertia::render('Security/Show', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => $request->user()->status,
             'sessions' => Session::where('user_id', $request->user()->id)->get(),
+            'isTwoFactorAuthenticationFeatureEnabled' => Features::enabled(Features::twoFactorAuthentication()),
         ]);
     }
 

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Validation\Rule;
+use Laravel\Fortify\Features;
 
 class ProfileController extends Controller
 {
@@ -22,7 +23,8 @@ class ProfileController extends Controller
     {
         return Inertia::render('Profile/Show', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
+            'isUpdateProfileEnabled' => Features::enabled(Features::updateProfileInformation()),
+            'isUpdatePasswordEnabled' => Features::enabled(Features::updatePasswords()),
         ]);
     }
 
