@@ -19,15 +19,13 @@ import {
     useSidebar,
 } from '@/components/ui/sidebar';
 
-export function ProjectSwitcher({
-    projects,
-}: {
-    projects: {
-        logo: React.ElementType;
-        subtitle: string;
-        title: string;
-    }[];
-}) {
+interface Project {
+    logo: React.ElementType;
+    subtitle: string;
+    title: string;
+}
+
+export function ProjectSwitcher({ projects }: { projects: Project[] }) {
     const { isMobile } = useSidebar();
     const [activeProject, setActiveProject] = React.useState(projects[0]);
 

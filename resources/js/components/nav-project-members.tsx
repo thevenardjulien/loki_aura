@@ -18,15 +18,15 @@ import {
 } from '@/components/ui/sidebar';
 import { Link } from '@inertiajs/react';
 
-export function NavProjectMembers({
-    members,
-}: {
+interface NavProjectMembersProps {
     members: {
         name: string;
         url: string;
         isConnected: boolean;
     }[];
-}) {
+}
+
+export function NavProjectMembers({ members }: NavProjectMembersProps) {
     const { isMobile } = useSidebar();
 
     return (
