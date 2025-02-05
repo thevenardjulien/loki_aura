@@ -7,14 +7,14 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
+import ErrorFeedback from '@/components/ui/error-feedback';
 import { Input } from '@/components/ui/input';
-import InputError from '@/components/ui/input-error';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import axios from 'axios';
 import { useRef, useState } from 'react';
 import { Label } from './ui/label';
 
-interface ConfirmsPasswordProps {
+interface ConfirmWithPasswordProps {
     title?: string;
     content?: string;
     button?: string;
@@ -22,13 +22,13 @@ interface ConfirmsPasswordProps {
     onConfirmed: () => void;
 }
 
-export default function ConfirmsPassword({
+export default function ConfirmWithPassword({
     title = 'Confirm action with Password',
     content = 'This action is irreversible. Please type your password to confirm.',
     button = 'Confirm',
     children,
     onConfirmed,
-}: ConfirmsPasswordProps) {
+}: ConfirmWithPasswordProps) {
     const [confirmingPassword, setConfirmingPassword] = useState(false);
     const [form, setForm] = useState({
         password: '',
@@ -124,7 +124,7 @@ export default function ConfirmsPassword({
                             />
                         </div>
 
-                        <InputError message={form.error} />
+                        <ErrorFeedback message={form.error} />
                     </div>
 
                     <DialogFooter>

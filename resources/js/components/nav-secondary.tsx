@@ -1,5 +1,4 @@
 import { type LucideIcon } from 'lucide-react';
-import * as React from 'react';
 
 import {
     SidebarGroup,
@@ -10,16 +9,16 @@ import {
 } from '@/components/ui/sidebar';
 import { Link } from '@inertiajs/react';
 
-export function NavSecondary({
-    items,
-    ...props
-}: {
+interface NavSecondaryProps {
     items: {
         title: string;
         url: string;
         icon: LucideIcon;
     }[];
-} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+    className?: string;
+}
+
+export function NavSecondary({ items, ...props }: NavSecondaryProps) {
     return (
         <SidebarGroup {...props}>
             <SidebarGroupContent>

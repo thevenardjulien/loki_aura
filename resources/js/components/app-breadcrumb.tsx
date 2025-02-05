@@ -17,8 +17,9 @@ interface BreadcrumbSegment {
 export function AppBreadcrumb() {
     const { url } = usePage();
 
-    // Remove trailing slash and split the path
-    const currentPath = url.endsWith('/') ? url.slice(0, -1) : url;
+    // Remove query parameters and trailing slash
+    const pathWithoutQuery = url.split('?')[0];
+    const currentPath = pathWithoutQuery.endsWith('/') ? pathWithoutQuery.slice(0, -1) : pathWithoutQuery;
     const segments = currentPath.split('/').filter(Boolean);
 
     // Generate breadcrumb segments

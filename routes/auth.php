@@ -39,11 +39,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
-        ->name('password.confirm');
-
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+    Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])->name('password.confirm');
 
     Route::get('/verify-email', function () {
         return Inertia::render('Auth/VerifyEmail');

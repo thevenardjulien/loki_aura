@@ -20,9 +20,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Link } from '@inertiajs/react';
 
-export function NavMain({
-    items,
-}: {
+interface NavMainProps {
     items: {
         title: string;
         url: string;
@@ -33,7 +31,9 @@ export function NavMain({
             url: string;
         }[];
     }[];
-}) {
+}
+
+export function NavMain({ items }: NavMainProps) {
     return (
         <SidebarGroup>
             <SidebarGroupLabel>Platform</SidebarGroupLabel>

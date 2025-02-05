@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import ErrorFeedback from '@/components/ui/error-feedback';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthenticationLayout from '@/layouts/AuthenticationLayout';
@@ -68,6 +69,7 @@ export default function Register({
                                 }
                                 autoFocus
                             />
+                            <ErrorFeedback message={errors.name} />
                         </div>
                     </div>
                     <div className="grid gap-6">
@@ -85,6 +87,7 @@ export default function Register({
                                     setData('email', e.target.value)
                                 }
                             />
+                            <ErrorFeedback message={errors.email} />
                         </div>
                         <div className="grid gap-2">
                             <div className="flex items-center">
@@ -102,6 +105,7 @@ export default function Register({
                                     setData('password', e.target.value)
                                 }
                             />
+                            <ErrorFeedback message={errors.password} />
                         </div>
                         <div className="grid gap-2">
                             <div className="flex items-center">
@@ -123,6 +127,9 @@ export default function Register({
                                         e.target.value,
                                     )
                                 }
+                            />
+                            <ErrorFeedback
+                                message={errors.password_confirmation}
                             />
                         </div>
                         <Button

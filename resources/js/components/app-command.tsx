@@ -9,14 +9,7 @@ import {
     CommandSeparator,
 } from '@/components/ui/command';
 import { router } from '@inertiajs/react';
-import {
-    BadgeCheck,
-    GalleryVerticalEnd,
-    LayoutDashboard,
-    Lock,
-    Moon,
-    Sun,
-} from 'lucide-react';
+import { BadgeCheck, LayoutDashboard, Lock, Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTheme } from './theme-provider';
 
@@ -31,11 +24,6 @@ const navigationItems: NavigationItem[] = [
         title: 'Dashboard',
         href: '/dashboard',
         icon: <LayoutDashboard />,
-    },
-    {
-        title: 'Projects',
-        href: '/projects',
-        icon: <GalleryVerticalEnd />,
     },
     {
         title: 'Profile',

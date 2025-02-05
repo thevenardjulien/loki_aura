@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import ErrorFeedback from '@/components/ui/error-feedback';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthenticationLayout from '@/layouts/AuthenticationLayout';
@@ -36,11 +37,7 @@ export default function Login({
                         Enter your email below to login to your account
                     </p>
                 </div>
-                {errors.email && (
-                    <div className="text-center text-sm text-red-600">
-                        {errors.email}
-                    </div>
-                )}
+                <ErrorFeedback message={errors.email} />
                 <div className="grid gap-6">
                     <div className="grid gap-2">
                         <Label htmlFor="email">Email</Label>

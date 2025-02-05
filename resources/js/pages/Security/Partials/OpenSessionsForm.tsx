@@ -8,8 +8,8 @@ import {
     DialogFooter,
     DialogTitle,
 } from '@/components/ui/dialog';
+import ErrorFeedback from '@/components/ui/error-feedback';
 import { Input } from '@/components/ui/input';
-import InputError from '@/components/ui/input-error';
 import { Label } from '@/components/ui/label';
 import { useBrowserSessions } from '@/hooks/use-browser-sessions';
 import { Session } from '@/types';
@@ -174,7 +174,7 @@ export function OpenSessionsForm({ sessions = [] }: { sessions?: Session[] }) {
                                 }
                                 className="max-w-lg"
                             />
-                            <InputError
+                            <ErrorFeedback
                                 message={form.errors.password}
                                 className="mt-2"
                             />
