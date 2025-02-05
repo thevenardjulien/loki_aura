@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
 
-export default function InputError({
+export default function ErrorFeedback({
     message,
     className = '',
     ...props

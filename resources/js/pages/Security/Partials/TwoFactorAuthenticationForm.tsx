@@ -1,7 +1,7 @@
 import ConfirmWithPassword from '@/components/confirm-with-password';
 import { Button } from '@/components/ui/button';
+import ErrorFeedback from '@/components/ui/error-feedback';
 import { Input } from '@/components/ui/input';
-import InputError from '@/components/ui/input-error';
 import { Label } from '@/components/ui/label';
 import { router, useForm, usePage } from '@inertiajs/react';
 import axios from 'axios';
@@ -155,7 +155,7 @@ export function TwoFactorAuthenticationForm() {
                                 </Button>
                             </div>
 
-                            <InputError message={form.errors.code} />
+                            <ErrorFeedback message={form.errors.code} />
                         </div>
                     </div>
                 </>

@@ -7,8 +7,8 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
+import ErrorFeedback from '@/components/ui/error-feedback';
 import { Input } from '@/components/ui/input';
-import InputError from '@/components/ui/input-error';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import axios from 'axios';
 import { useRef, useState } from 'react';
@@ -124,7 +124,7 @@ export default function ConfirmWithPassword({
                             />
                         </div>
 
-                        <InputError message={form.error} />
+                        <ErrorFeedback message={form.error} />
                     </div>
 
                     <DialogFooter>

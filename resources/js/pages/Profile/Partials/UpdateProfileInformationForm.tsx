@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import ErrorFeedback from '@/components/ui/error-feedback';
 import { Input } from '@/components/ui/input';
-import InputError from '@/components/ui/input-error';
 import { Label } from '@/components/ui/label';
 import { useForm, usePage } from '@inertiajs/react';
 import { Pencil } from 'lucide-react';
@@ -122,7 +122,9 @@ export default function UpdateProfileInformation({
                         </div>
                     </div>
 
-                    <InputError className="mt-2">{errors.photo}</InputError>
+                    <ErrorFeedback className="mt-2">
+                        {errors.photo}
+                    </ErrorFeedback>
                 </div>
 
                 <div className="flex flex-col gap-2">
@@ -137,7 +139,7 @@ export default function UpdateProfileInformation({
                         autoComplete="name"
                     />
 
-                    <InputError className="mt-2" message={errors.name} />
+                    <ErrorFeedback className="mt-2" message={errors.name} />
                 </div>
 
                 <div className="flex flex-col gap-2">
@@ -153,7 +155,7 @@ export default function UpdateProfileInformation({
                         autoComplete="username"
                     />
 
-                    <InputError className="mt-2" message={errors.email} />
+                    <ErrorFeedback className="mt-2" message={errors.email} />
                 </div>
 
                 <div className="flex items-center gap-4">

@@ -1,4 +1,4 @@
-import InputError from '@/components/ui/input-error';
+import ErrorFeedback from '@/components/ui/error-feedback';
 import {
     InputOTP,
     InputOTPGroup,
@@ -52,7 +52,7 @@ export default function TwoFactorChallenge() {
                     app.
                 </p>
 
-                {errors && <InputError message={errors.code} />}
+                {errors && <ErrorFeedback message={errors.code} />}
             </div>
         </AuthenticationLayout>
     );
