@@ -14,7 +14,7 @@ import axios from 'axios';
 import { useRef, useState } from 'react';
 import { Label } from './ui/label';
 
-interface ConfirmsPasswordProps {
+interface ConfirmWithPasswordProps {
     title?: string;
     content?: string;
     button?: string;
@@ -22,13 +22,13 @@ interface ConfirmsPasswordProps {
     onConfirmed: () => void;
 }
 
-export default function ConfirmsPassword({
+export default function ConfirmWithPassword({
     title = 'Confirm action with Password',
     content = 'This action is irreversible. Please type your password to confirm.',
     button = 'Confirm',
     children,
     onConfirmed,
-}: ConfirmsPasswordProps) {
+}: ConfirmWithPasswordProps) {
     const [confirmingPassword, setConfirmingPassword] = useState(false);
     const [form, setForm] = useState({
         password: '',

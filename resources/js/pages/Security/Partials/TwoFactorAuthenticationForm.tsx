@@ -1,4 +1,4 @@
-import ConfirmsPassword from '@/components/confirm-with-password';
+import ConfirmWithPassword from '@/components/confirm-with-password';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import InputError from '@/components/ui/input-error';
@@ -170,7 +170,7 @@ export function TwoFactorAuthenticationForm() {
                             recommend enabling it.
                         </h3>
                     </div>
-                    <ConfirmsPassword
+                    <ConfirmWithPassword
                         title="Enable 2FA"
                         content="To start enabling two-factor authentication, you must confirm your password."
                         onConfirmed={enableTwoFactorAuthentication}
@@ -178,7 +178,7 @@ export function TwoFactorAuthenticationForm() {
                         <Button type="button" disabled={enabling}>
                             {enabling ? 'Enabling...' : 'Enable'}
                         </Button>
-                    </ConfirmsPassword>
+                    </ConfirmWithPassword>
                 </div>
             )}
 
@@ -209,7 +209,7 @@ export function TwoFactorAuthenticationForm() {
                         </div>
                     )}
                     <div className="flex gap-4">
-                        <ConfirmsPassword
+                        <ConfirmWithPassword
                             title="Disable 2FA"
                             content="To disable two-factor authentication, you must confirm your password."
                             onConfirmed={disableTwoFactorAuthentication}
@@ -217,7 +217,7 @@ export function TwoFactorAuthenticationForm() {
                             <Button type="button" disabled={disabling}>
                                 {disabling ? 'Disabling...' : 'Disable'}
                             </Button>
-                        </ConfirmsPassword>
+                        </ConfirmWithPassword>
                     </div>
                 </div>
             )}
