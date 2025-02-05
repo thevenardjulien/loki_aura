@@ -18,10 +18,10 @@ import {
 } from '@/components/ui/sidebar';
 import { Link } from '@inertiajs/react';
 
-export function NavTeamMembers({
-    teamMembers,
+export function NavProjectMembers({
+    members,
 }: {
-    teamMembers: {
+    members: {
         name: string;
         url: string;
         isConnected: boolean;
@@ -31,9 +31,9 @@ export function NavTeamMembers({
 
     return (
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-            <SidebarGroupLabel>Team Members</SidebarGroupLabel>
+            <SidebarGroupLabel>Project Members</SidebarGroupLabel>
             <SidebarMenu>
-                {teamMembers.map((item) => (
+                {members.map((item) => (
                     <SidebarMenuItem key={item.name}>
                         <SidebarMenuButton asChild>
                             <Link href={item.url}>
@@ -69,7 +69,7 @@ export function NavTeamMembers({
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem>
                                     <Trash2 className="text-muted-foreground" />
-                                    <span>Remove from Team</span>
+                                    <span>Remove from Project</span>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>

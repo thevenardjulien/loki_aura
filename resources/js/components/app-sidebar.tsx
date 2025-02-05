@@ -11,10 +11,10 @@ import {
 import * as React from 'react';
 
 import { NavMain } from '@/components/nav-main';
+import { NavProjectMembers } from '@/components/nav-project-members';
 import { NavSecondary } from '@/components/nav-secondary';
-import { NavTeamMembers } from '@/components/nav-team-members';
 import { NavUser } from '@/components/nav-user';
-import { TeamSwitcher } from '@/components/team-switcher';
+import { ProjectSwitcher } from '@/components/project-switcher';
 import {
     Sidebar,
     SidebarContent,
@@ -24,11 +24,11 @@ import {
 import { usePage } from '@inertiajs/react';
 
 const data = {
-    teams: [
+    projects: [
         {
-            name: 'Default Team',
             logo: Command,
-            plan: 'Starter',
+            title: 'Starter',
+            subtitle: 'React - Inertia - Laravel',
         },
     ],
     navMain: [
@@ -93,7 +93,7 @@ const data = {
             icon: Send,
         },
     ],
-    team_members: [
+    projectMembers: [
         {
             name: 'Tylor Otwell',
             url: '#',
@@ -118,11 +118,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
         <Sidebar variant="inset" collapsible="icon" {...props}>
             <SidebarHeader>
-                <TeamSwitcher teams={data.teams} />
+                <ProjectSwitcher projects={data.projects} />
             </SidebarHeader>
             <SidebarContent>
                 <NavMain items={data.navMain} />
-                <NavTeamMembers teamMembers={data.team_members} />
+                <NavProjectMembers members={data.projectMembers} />
                 <NavSecondary items={data.navSecondary} className="mt-auto" />
             </SidebarContent>
             <SidebarFooter>
