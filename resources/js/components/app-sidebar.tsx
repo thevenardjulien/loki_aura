@@ -116,7 +116,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const user = usePage().props.auth.user;
 
     return (
-        <Sidebar variant="inset" collapsible="icon" {...props}>
+        <Sidebar variant="inset" collapsible="offcanvas" {...props}>
             <SidebarHeader>
                 <ProjectSwitcher projects={data.projects} />
             </SidebarHeader>
