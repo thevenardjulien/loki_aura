@@ -1,11 +1,12 @@
 {
-    "name": "laravel-inertia-react-starter",
+    "name": "react-inertia-laravel-starter",
     "version": "0.1.0",
     "description": "The Laravel Inertia React Starter",
     "keywords": [
         "laravel",
         "inertia",
         "react",
+        "tailwind",
         "shadcn-ui"
     ],
     "license": "MIT",
@@ -14,7 +15,7 @@
     "scripts": {
         "build": "vite build && vite build --ssr",
         "dev": "vite",
-        "lint": "eslint resources/js --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix"
+        "lint": "eslint resources/js"
     },
     "dependencies": {
         "@inertiajs/react": "^2.0.3",

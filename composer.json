@@ -1,6 +1,6 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "ferjal0/laravel-inertia-react-starter",
+    "name": "ferjal0/react-inertia-laravel-starter",
     "type": "project",
     "description": "The Laravel Inertia React Starter",
     "keywords": [

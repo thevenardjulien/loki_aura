@@ -46,7 +46,7 @@ This project implements a modern monolithic architecture using Laravel as the ba
 
 ```bash
 git clone <repository-url>
-cd laravel-inertia-react-starter
+cd react-inertia-laravel-starter
 ```
 
 2. Install PHP dependencies:
