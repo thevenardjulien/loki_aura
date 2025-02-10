@@ -1,12 +1,15 @@
 import ConfirmWithPassword from '@/components/confirm-with-password';
 import { Button } from '@/components/ui/button';
-import ErrorFeedback from '@/components/ui/error-feedback';
-import { Input } from '@/components/ui/input';
+import {
+    InputOTP,
+    InputOTPGroup,
+    InputOTPSlot,
+} from '@/components/ui/input-otp';
 import { Label } from '@/components/ui/label';
 import { router, useForm, usePage } from '@inertiajs/react';
 import axios from 'axios';
 import { CheckCircle, Siren } from 'lucide-react';
-import { useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 export function TwoFactorAuthenticationForm() {
@@ -15,6 +18,9 @@ export function TwoFactorAuthenticationForm() {
     const [disabling, setDisabling] = useState(false);
     const [qrCode, setQrCode] = useState<string | null>(null);
     const [recoveryCodes, setRecoveryCodes] = useState<string[]>([]);
+
+    // Refs
+    const inputRef = useRef<HTMLInputElement>(null);
 
     // Hooks
     const form = useForm({
@@ -51,7 +57,9 @@ export function TwoFactorAuthenticationForm() {
             });
     };
 
-    const confirmTwoFactorAuthentication = () => {
+    const confirmTwoFactorAuthentication = (e: FormEvent) => {
+        e.preventDefault();
+
         form.post(route('two-factor.confirm'), {
             errorBag: 'confirmTwoFactorAuthentication',
             preserveScroll: true,
@@ -62,7 +70,10 @@ export function TwoFactorAuthenticationForm() {
                 toast.success('2FA successfully enabled');
             },
             onError: () => {
-                toast.error('There was an error enabling 2FA');
+                inputRef.current?.focus();
+                form.errors.code
+                    ? toast.error(form.errors.code)
+                    : toast.error('Something went wrong');
             },
         });
     };
@@ -112,7 +123,7 @@ export function TwoFactorAuthenticationForm() {
             {qrCode && (
                 <>
                     <div className="flex flex-col gap-5">
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
                             To finish enabling two factor authentication, scan
                             the following QR code using your phone's
                             authenticator application or enter the setup key and
@@ -125,28 +136,32 @@ export function TwoFactorAuthenticationForm() {
                         ></div>
                     </div>
 
-                    <div className="mt-4">
+                    <form onSubmit={confirmTwoFactorAuthentication}>
                         <Label htmlFor="code">Code</Label>
 
                         <div className="flex flex-col gap-2">
                             <div className="flex gap-2">
-                                <Input
-                                    id="code"
-                                    type="text"
-                                    name="code"
-                                    className="block"
+                                <InputOTP
+                                    ref={inputRef}
                                     value={form.data.code}
-                                    onChange={(e) =>
-                                        form.setData(
-                                            'code',
-                                            e.currentTarget.value,
-                                        )
+                                    maxLength={6}
+                                    onChange={(value) =>
+                                        form.setData('code', value)
                                     }
-                                />
+                                    autoFocus
+                                >
+                                    <InputOTPGroup>
+                                        <InputOTPSlot index={0} />
+                                        <InputOTPSlot index={1} />
+                                        <InputOTPSlot index={2} />
+                                        <InputOTPSlot index={3} />
+                                        <InputOTPSlot index={4} />
+                                        <InputOTPSlot index={5} />
+                                    </InputOTPGroup>
+                                </InputOTP>
 
                                 <Button
-                                    type="button"
-                                    onClick={confirmTwoFactorAuthentication}
+                                    type="submit"
                                     disabled={form.processing}
                                 >
                                     {form.processing
@@ -154,10 +169,8 @@ export function TwoFactorAuthenticationForm() {
                                         : 'Confirm'}
                                 </Button>
                             </div>
-
-                            <ErrorFeedback message={form.errors.code} />
                         </div>
-                    </div>
+                    </form>
                 </>
             )}
 
