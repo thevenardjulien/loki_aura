@@ -110,19 +110,19 @@ Tailwind is configured in `tailwind.config.js` with custom theme settings:
 
 ```javascript
 module.exports = {
-  content: ['./resources/js/**/*.{js,ts,jsx,tsx}'],
-  theme: {
-    extend: {
-      colors: {
-        // Custom colors
-      }
-    }
-  },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography')
-  ]
-}
+    content: ['./resources/js/**/*.{js,ts,jsx,tsx}'],
+    theme: {
+        extend: {
+            colors: {
+                // Custom colors
+            },
+        },
+    },
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/typography'),
+    ],
+};
 ```
 
 ### CSS Organization
@@ -136,9 +136,7 @@ resources/css/
 ### Styling Best Practices
 
 1. Use Tailwind's utility classes
-2. Create component classes for reusable styles
-3. Use `@apply` for complex components
-4. Leverage Shadcn UI's built-in styling system
+2. Leverage Shadcn UI's built-in styling system
 
 ## 🔄 State Management
 
@@ -148,13 +146,13 @@ Data from the server is passed as props:
 
 ```typescript
 interface PageProps {
-  auth: {
-    user: User
-  }
-  errors: Record<string, string>
-  flash: {
-    message?: string
-  }
+    auth: {
+        user: User;
+    };
+    errors: Record<string, string>;
+    flash: {
+        message?: string;
+    };
 }
 ```
 
@@ -163,18 +161,18 @@ interface PageProps {
 Use Inertia's form helpers:
 
 ```typescript
-import { useForm } from '@inertiajs/react'
+import { useForm } from '@inertiajs/react';
 
 export default function UpdateProfile() {
-  const form = useForm({
-    name: '',
-    email: ''
-  })
+    const form = useForm({
+        name: '',
+        email: '',
+    });
 
-  function submit(e: React.FormEvent) {
-    e.preventDefault()
-    form.patch('/profile')
-  }
+    function submit(e: React.FormEvent) {
+        e.preventDefault();
+        form.patch('/profile');
+    }
 }
 ```
 
@@ -187,16 +185,16 @@ Common types are stored in `resources/js/types/`:
 ```typescript
 // types/index.d.ts
 export interface User {
-  id: number
-  name: string
-  email: string
-  email_verified_at: string | null
+    id: number;
+    name: string;
+    email: string;
+    email_verified_at: string | null;
 }
 
 export interface PageProps {
-  auth: {
-    user: User
-  }
+    auth: {
+        user: User;
+    };
 }
 ```
 
@@ -246,42 +244,3 @@ Recommended extensions:
 - ESLint
 - Prettier
 - Tailwind CSS IntelliSense
-- TypeScript Vue Plugin
-
-### Debug Tools
-
-- React Developer Tools
-- Inertia DevTools
-
-## 🚀 Performance Optimization
-
-### Code Splitting
-
-Pages are automatically code-split. Additional splitting:
-
-```typescript
-const MyComponent = React.lazy(() => import('./MyComponent'))
-```
-
-### Image Optimization
-
-Use the optimized image component:
-
-```typescript
-import { Image } from '@/components/Image'
-
-<Image
-  src="/image.jpg"
-  alt="Description"
-  width={800}
-  height={600}
-/>
-```
-
-### Bundle Analysis
-
-Run bundle analysis:
-
-```bash
-npm run build:analyze
-```
