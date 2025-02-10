@@ -1,44 +1,67 @@
-import eslint from '@eslint/js';
-import tseslint from '@typescript-eslint/eslint-plugin';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import prettierPlugin from 'eslint-plugin-prettier';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import reactRefreshPlugin from 'eslint-plugin-react-refresh';
+import globals from 'globals';
 
 export default [
+    { ignores: ['dist', 'node_modules', 'vendor', 'public'] },
     {
+        files: ['**/*.{ts,tsx}'],
         languageOptions: {
-            ecmaVersion: 'latest',
-            sourceType: 'module',
             parser: tsParser,
             parserOptions: {
                 ecmaVersion: 'latest',
                 sourceType: 'module',
+                ecmaFeatures: {
+                    jsx: true,
+                },
+                project: './tsconfig.json',
+                tsconfigRootDir: '.',
+            },
+            globals: {
+                ...globals.browser,
+                ...globals.es2021,
+                route: 'readonly',
             },
         },
-        env: {
-            browser: true,
-            node: true,
-        },
         plugins: {
-            '@typescript-eslint': tseslint,
+            '@typescript-eslint': tsPlugin,
             react: reactPlugin,
+            'react-refresh': reactRefreshPlugin,
             'react-hooks': reactHooksPlugin,
-            prettier: prettierPlugin,
-        },
-        rules: {
-            ...eslint.configs.recommended.rules,
-            ...tseslint.configs.recommended.rules,
-            ...reactPlugin.configs.recommended.rules,
-            ...reactHooksPlugin.configs.recommended.rules,
-            'react/react-in-jsx-scope': 'off',
-            'react/prop-types': 'off',
-            'react/no-unescaped-entities': 'off',
         },
         settings: {
+            'import/resolver': {
+                typescript: {
+                    alwaysTryTypes: true,
+                    project: './tsconfig.json',
+                },
+                alias: {
+                    map: [
+                        ['@', './resources/js'],
+                        ['@types', './resources/js/types'],
+                    ],
+                    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+                },
+            },
             react: {
                 version: 'detect',
             },
+        },
+        rules: {
+            '@typescript-eslint/no-explicit-any': 'warn',
+            '@typescript-eslint/explicit-function-return-type': 'off',
+            '@typescript-eslint/explicit-module-boundary-types': 'off',
+            '@typescript-eslint/no-unused-vars': [
+                'warn',
+                { argsIgnorePattern: '^_' },
+            ],
+            'react-hooks/rules-of-hooks': 'error',
+            'react-hooks/exhaustive-deps': 'warn',
+            'react/prop-types': 'off',
+            'react/react-in-jsx-scope': 'off',
         },
     },
 ];
