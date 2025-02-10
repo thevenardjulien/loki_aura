@@ -1,9 +1,8 @@
-# Laravel Inertia React - Project Starter
+# React Inertia Laravel - Project Starter
 
 A modern, full-stack web application boilerplate built with Laravel 11, Inertia.js, React 19, TypeScript, Tailwind CSS, and Shadcn UI components.
 
 ![Starter Screenshots](https://github.com/user-attachments/assets/a550c79c-87eb-49a2-996b-8bb86991ec99)
-
 
 ## Features
 
@@ -60,7 +59,7 @@ This project implements a modern monolithic architecture using Laravel as the ba
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ferjal0/react-inertia-laravel
 cd react-inertia-laravel-starter
 ```
 
