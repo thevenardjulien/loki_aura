@@ -16,9 +16,11 @@ This project implements a modern monolithic architecture using Laravel as the ba
 ### Tech Stack
 
 - **Backend**
+
     - Laravel 11.x (PHP 8.x)
     - Laravel Fortify for authentication
     - SQLite
+
 - **Frontend**
 
     - React 18.3.1
@@ -135,11 +137,3 @@ npm run lint
 ```bash
 npm run build
 ```
-
-## 🤝 Contributing
-
-Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
