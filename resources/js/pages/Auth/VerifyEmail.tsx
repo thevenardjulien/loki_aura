@@ -20,14 +20,16 @@ export default function VerifyEmail({ status }: { status?: string }) {
                 <div className="flex flex-col items-center gap-4 text-center">
                     <h1 className="text-2xl font-bold">Verify your email</h1>
                     <p className="text-balance text-sm text-muted-foreground">
-                        Please verify your email address by clicking the link in the email we sent you.
-                        If you haven't received it, we can send a new verification link.
+                        Please verify your email address by clicking the link in
+                        the email we sent you. If you haven't received it, we
+                        can send a new verification link.
                     </p>
                 </div>
 
                 {status === 'verification-link-sent' && (
                     <div className="text-center text-sm font-medium text-green-600 dark:text-green-400">
-                        A new verification link has been sent to your email address.
+                        A new verification link has been sent to your email
+                        address.
                     </div>
                 )}
 

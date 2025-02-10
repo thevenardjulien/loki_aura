@@ -19,7 +19,9 @@ export function AppBreadcrumb() {
 
     // Remove query parameters and trailing slash
     const pathWithoutQuery = url.split('?')[0];
-    const currentPath = pathWithoutQuery.endsWith('/') ? pathWithoutQuery.slice(0, -1) : pathWithoutQuery;
+    const currentPath = pathWithoutQuery.endsWith('/')
+        ? pathWithoutQuery.slice(0, -1)
+        : pathWithoutQuery;
     const segments = currentPath.split('/').filter(Boolean);
 
     // Generate breadcrumb segments

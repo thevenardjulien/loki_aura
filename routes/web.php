@@ -16,15 +16,18 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware('auth', 'verified')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+    // Profile
     Route::get('/account/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/account/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/account/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
+
+    // Security
     Route::get('/account/security', [SecurityController::class, 'show'])->name('security.show');
 });
 

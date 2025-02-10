@@ -1,13 +1,6 @@
 'use client';
 
-import {
-    BookOpen,
-    Command,
-    GalleryVerticalEnd,
-    LayoutDashboard,
-    LifeBuoy,
-    Send,
-} from 'lucide-react';
+import { Atom, LayoutDashboard, LifeBuoy, Send } from 'lucide-react';
 import * as React from 'react';
 
 import { NavMain } from '@/components/nav-main';
@@ -26,7 +19,7 @@ import { usePage } from '@inertiajs/react';
 const data = {
     projects: [
         {
-            logo: Command,
+            logo: Atom,
             title: 'Starter',
             subtitle: 'React - Inertia - Laravel',
         },
@@ -36,49 +29,6 @@ const data = {
             title: 'Dashboard',
             url: '/dashboard',
             icon: LayoutDashboard,
-            isActive: true,
-        },
-        {
-            title: 'Projects',
-            url: '/dashboard',
-            icon: GalleryVerticalEnd,
-            items: [
-                {
-                    title: 'Board',
-                    url: '/dashboard',
-                },
-                {
-                    title: 'Tasks',
-                    url: '/dashboard',
-                },
-                {
-                    title: 'Reports',
-                    url: '/dashboard',
-                },
-            ],
-        },
-        {
-            title: 'Documentation',
-            url: '/dashboard',
-            icon: BookOpen,
-            items: [
-                {
-                    title: 'Getting Started',
-                    url: '/dashboard',
-                },
-                {
-                    title: 'Backend Setup',
-                    url: '/dashboard',
-                },
-                {
-                    title: 'Frontend Setup',
-                    url: '/dashboard',
-                },
-                {
-                    title: 'Changelog',
-                    url: '/dashboard',
-                },
-            ],
         },
     ],
     navSecondary: [
@@ -116,7 +66,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const user = usePage().props.auth.user;
 
     return (
-        <Sidebar variant="inset" collapsible="offcanvas" {...props}>
+        <Sidebar variant="inset" collapsible="icon" {...props}>
             <SidebarHeader>
                 <ProjectSwitcher projects={data.projects} />
             </SidebarHeader>

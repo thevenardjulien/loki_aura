@@ -38,7 +38,7 @@ export function TwoFactorAuthenticationForm() {
             route('two-factor.enable'),
             {},
             {
-                onSuccess: (all) => {
+                onSuccess: () => {
                     setEnabling(false);
                     showQrCode();
                 },

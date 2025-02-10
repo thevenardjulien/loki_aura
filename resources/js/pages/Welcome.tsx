@@ -18,7 +18,7 @@ export default function Welcome({ auth }: PageProps) {
                             <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
                                 <Command className="size-4" />
                             </div>
-                            React Inertia
+                            React Inertia Laravel
                         </a>
 
                         <nav className="flex items-center gap-4">
