@@ -2,6 +2,9 @@
 
 A modern, full-stack web application boilerplate built with Laravel 11, Inertia.js, React 19, TypeScript, Tailwind CSS, and Shadcn UI components.
 
+![Starter Screenshots](https://github.com/user-attachments/assets/a550c79c-87eb-49a2-996b-8bb86991ec99)
+
+
 ## Features
 
 - Auth features using Laravel Fortify
