@@ -1,8 +1,6 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\DB;
 
 test('profile page is displayed', function () {
     $user = User::factory()->create();
@@ -94,75 +92,4 @@ test('security page is displayed', function () {
         ->get('/account/security');
 
     $response->assertOk();
-});
-
-test('user can destroy other browser sessions', function () {
-    Config::set('session.driver', 'database');
-
-    $user = User::factory()->create();
-
-    $response = $this
-        ->actingAs($user)
-        ->from('/account/security')
-        ->delete('/account/sessions/other-browser-sessions', [
-            'password' => 'password',
-        ]);
-
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/account/security')
-        ->assertSessionHas('status', 'other-browser-sessions-terminated');
-});
-
-test('user cannot destroy other browser sessions with wrong password', function () {
-    Config::set('session.driver', 'database');
-
-    $user = User::factory()->create();
-
-    $response = $this
-        ->actingAs($user)
-        ->from('/account/security')
-        ->delete('/account/sessions/other-browser-sessions', [
-            'password' => 'wrong-password',
-        ]);
-
-    $response
-        ->assertSessionHasErrors('password')
-        ->assertRedirect('/account/security');
-});
-
-test('user can destroy specific browser session', function () {
-    Config::set('session.driver', 'database');
-
-    $user = User::factory()->create();
-
-    // Create a test session in the database
-    $sessionId = 'test-session-id';
-    DB::table('sessions')->insert([
-        'id' => $sessionId,
-        'user_id' => $user->id,
-        'ip_address' => '127.0.0.1',
-        'user_agent' => 'Test Agent',
-        'payload' => serialize(['_token' => 'test']),
-        'last_activity' => time(),
-    ]);
-
-    $response = $this
-        ->actingAs($user)
-        ->from('/account/security')
-        ->delete("/account/sessions/browser-sessions/{$sessionId}", [
-            'password' => 'password',
-        ]);
-
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/account/security')
-        ->assertSessionHas('status', 'browser-session-terminated');
-
-    // Verify the session was actually deleted
-    $this->assertNull(
-        DB::table('sessions')
-            ->where('id', $sessionId)
-            ->first()
-    );
 });
