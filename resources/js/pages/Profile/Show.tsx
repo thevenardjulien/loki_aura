@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/layouts/AuthenticatedLayout';
+import AuthenticatedLayout from '@/layouts/AuthenticatedLayout_do_not_use';
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
 import DeleteUserForm from './Partials/DeleteUserForm';

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\Notifiable;
@@ -21,9 +24,19 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
+        'title',
         'email',
+        'email_verified_at',
         'password',
+        'phone',
+        'phone_pro',
+        'active',
+        'renew',
+        'description',
+        'position_id',
+        'company_id',
     ];
 
     /**
@@ -32,7 +45,6 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var list<string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
@@ -85,7 +97,28 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getProfilePhotoUrlAttribute(): string
     {
         return $this->profile_photo_path
-            ? asset('storage/'.$this->profile_photo_path)
+            ? asset('storage/' . $this->profile_photo_path)
             : '';
+    }
+
+    public function meals(): BelongsToMany
+    {
+        return $this->belongsToMany(Meal::class)
+            ->withPivot('table_number', 'payment_status');
+    }
+
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class, 'user_id');
+    }
+
+    public function position(): BelongsTo
+    {
+        return $this->belongsTo(Position::class);
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
     }
 }

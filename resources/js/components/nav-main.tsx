@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/collapsible';
 import {
     SidebarGroup,
-    SidebarGroupLabel,
     SidebarMenu,
     SidebarMenuAction,
     SidebarMenuButton,
@@ -36,7 +35,6 @@ interface NavMainProps {
 export function NavMain({ items }: NavMainProps) {
     return (
         <SidebarGroup>
-            <SidebarGroupLabel>Platform</SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => (
                     <Collapsible
@@ -45,7 +43,7 @@ export function NavMain({ items }: NavMainProps) {
                         defaultOpen={item.isActive}
                     >
                         <SidebarMenuItem>
-                            <SidebarMenuButton asChild tooltip={item.title}>
+                            <SidebarMenuButton asChild tooltip={item.title} className='text-xl font-semibold'>
                                 <Link href={item.url}>
                                     <item.icon />
                                     <span>{item.title}</span>

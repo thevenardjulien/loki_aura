@@ -4,15 +4,15 @@ import { Atom, LayoutDashboard, LifeBuoy, Send } from 'lucide-react';
 import * as React from 'react';
 
 import { NavMain } from '@/components/nav-main';
-import { NavProjectMembers } from '@/components/nav-project-members';
-import { NavSecondary } from '@/components/nav-secondary';
+// import { NavProjectMembers } from '@/components/nav-project-members';
+// import { NavSecondary } from '@/components/nav-secondary';
 import { NavUser } from '@/components/nav-user';
-import { ProjectSwitcher } from '@/components/project-switcher';
+// import { ProjectSwitcher } from '@/components/project-switcher';
 import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
-    SidebarHeader,
+    // SidebarHeader,
 } from '@/components/ui/sidebar';
 import { usePage } from '@inertiajs/react';
 
@@ -26,8 +26,38 @@ const data = {
     ],
     navMain: [
         {
+            title: 'HomePage',
+            url: '/',
+            icon: LayoutDashboard,
+        },
+        {
             title: 'Dashboard',
             url: '/dashboard',
+            icon: LayoutDashboard,
+        },
+        {
+            title: 'Repas',
+            url: '/repas',
+            icon: LayoutDashboard,
+        },
+        {
+            title: 'Espace infos',
+            url: '/feed',
+            icon: LayoutDashboard,
+        },
+        {
+            title: 'Annuaire',
+            url: '/members',
+            icon: LayoutDashboard,
+        },
+        {
+            title: 'Gestion admin',
+            url: '/admin',
+            icon: LayoutDashboard,
+        },
+        {
+            title: 'Mon compte',
+            url: '/admin',
             icon: LayoutDashboard,
         },
     ],
@@ -67,13 +97,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     return (
         <Sidebar variant="inset" collapsible="icon" {...props}>
-            <SidebarHeader>
+            {/* <SidebarHeader>
                 <ProjectSwitcher projects={data.projects} />
-            </SidebarHeader>
+            </SidebarHeader> */}
             <SidebarContent>
+                <img src="/logo.webp" alt="AURA" className="h-auto w-2/3 max-w-full mx-auto" />
                 <NavMain items={data.navMain} />
-                <NavProjectMembers members={data.projectMembers} />
-                <NavSecondary items={data.navSecondary} className="mt-auto" />
+                {/* <NavProjectMembers members={data.projectMembers} /> */}
+                {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={user} />

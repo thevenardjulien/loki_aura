@@ -1,42 +1,24 @@
-import { AppBreadcrumb } from '@/components/app-breadcrumb';
-import { AppCommand } from '@/components/app-command';
-import { AppSidebar } from '@/components/app-sidebar';
-import { ThemeProvider } from '@/components/theme-provider';
-import { Separator } from '@/components/ui/separator';
-import {
-    SidebarInset,
-    SidebarProvider,
-    SidebarTrigger,
-} from '@/components/ui/sidebar';
-import { Toaster } from '@/components/ui/sonner';
+import { Link } from '@inertiajs/react';
 
-export default function AuthenticatedLayout({
+
+export default function AuthenticationLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
     return (
-        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-            <SidebarProvider>
-                <AppSidebar />
-                <SidebarInset>
-                    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-                        <div className="flex items-center gap-2 px-4">
-                            <SidebarTrigger className="-ml-1" />
-                            <Separator
-                                orientation="vertical"
-                                className="mr-2 h-4"
-                            />
-                            <AppBreadcrumb />
-                        </div>
-                    </header>
-                    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-                        {children}
-                    </div>
-                </SidebarInset>
-                <Toaster position="top-right" />
-                <AppCommand />
-            </SidebarProvider>
-        </ThemeProvider>
+        <div className="min-h-svh">
+            <div className="flex gap-4 bg-background p-6 md:p-10">
+
+                <div className="w-1/5">
+                    <Link href={route('dashboard')} className="flex items-center gap-2 font-medium">
+                        Accueil</Link>
+                    <Link href={route('repas.index')} className="flex items-center gap-2 font-medium">
+                        Repas</Link>
+                </div>
+                <div className="max-w-xs">{children}</div>
+
+            </div>
+        </div>
     );
 }

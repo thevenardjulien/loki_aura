@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Account\SecurityController;
+use App\Http\Controllers\MealController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,11 +16,20 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/legal/conditions-generales-d-utilisation', function () {
+    return Inertia::render('Legal/Cgu');
+});
+
+Route::get('/legal/conditions-generales-de-vente', function () {
+    return Inertia::render('Legal/Cgv');
+});
+
 Route::middleware('auth', 'verified')->group(function () {
     // Dashboard
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [MealController::class, 'index'])->name('dashboard');
+    Route::get('/repas', [MealController::class, 'repasIndex'])->name('repas.index');
+    Route::get('/repas/add', [MealController::class, 'repasCreate'])->name('repas.create');
+    Route::post('/repas/add', [MealController::class, 'repasStore'])->name('repas.store');
 
     // Profile
     Route::get('/account/profile', [ProfileController::class, 'show'])->name('profile.show');
@@ -30,4 +40,4 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/account/security', [SecurityController::class, 'show'])->name('security.show');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

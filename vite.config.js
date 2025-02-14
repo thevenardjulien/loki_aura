@@ -12,6 +12,6 @@ export default defineConfig({
         react(),
     ],
     alias: {
-        '@/*': './resources/js/*',
+        '@': './resources/js/*',
     },
 });

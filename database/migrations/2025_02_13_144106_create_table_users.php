@@ -12,23 +12,35 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->engine('InnoDB');
             $table->id();
-            $table->string('name');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->enum('title', ['M', 'Mme']);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
             $table->rememberToken();
+            $table->text('password');
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->string('phone')->nullable();
+            $table->string('phone_pro')->nullable();
+            $table->enum('active', ['en attente', 'actif', 'abandon', 'mutation', 'exclusion'])->default('en attente');
+            $table->date('renew')->nullable();
+            $table->string('description')->nullable();
+            $table->foreignId('position_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('company_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
+            $table->engine('InnoDB');
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
         Schema::create('sessions', function (Blueprint $table) {
+            $table->engine('InnoDB');
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
