@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('name');
             $table->text('address');
             $table->integer('price');
-            $table->date('date');
+            $table->datetime('date');
             $table->text('description');
             $table->enum('status', ['en attente', 'à venir', 'terminé', 'annulé'])
                 ->default('en attente')
                 ->nullable();
-            $table->string('thumbnail');
+            $table->string('thumbnail')->nullable();
             $table->foreignId('owner')->constrained('users', 'id')->onDelete('cascade');
             $table->integer('max_capacity');
             $table->integer('table_quantity')->nullable();

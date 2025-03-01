@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Meal;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -20,7 +21,7 @@ class MealController extends Controller
 
     public function repasIndex()
     {
-        $meals = Meal::with('users')->orderBy('date', 'desc')->paginate(5);
+        $meals = Meal::with('users')->orderBy('date', 'DESC')->paginate(5);
         return Inertia::render('Repas/Index', ['meals' => $meals]);
     }
 
@@ -38,6 +39,7 @@ class MealController extends Controller
             'price' => ['required', 'integer', 'min:0'],
             'date' => ['required', 'date'],
             'description' => ['required', 'string', 'max:255'],
+            'thumbnail' => ['nullable', 'image', 'mimes: jpg, jpeg, png, webp', 'max:2048'],
             'status' => ['required', 'string', 'max:255'],
             'owner' => ['required', 'integer'],
             'max_capacity' => ['required', 'integer', 'min:0'],
@@ -46,9 +48,15 @@ class MealController extends Controller
         ]);
 
         $validatedData['status'] = 'à venir';
+        $validatedData['date'] = Carbon::parse($validatedData['date'])->format('Y-m-d H:i:s');
+
+        dd($validatedData);
 
         Meal::create($validatedData);
 
-        return ['message' => 'Repas créé avec succès'];
+        return redirect()->route('repas.index')->with([
+            'message' => 'Repas créé avec succès !',
+            'type' => 'success',
+        ]);
     }
 }

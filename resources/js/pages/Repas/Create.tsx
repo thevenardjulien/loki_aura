@@ -4,15 +4,16 @@ import { Head, useForm } from '@inertiajs/react';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { User } from "@/types";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function Create({ owner }: { owner: User }) {
+export default function Create({ owner, file }: { owner: User, file: File }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         address: '',
         price: 0,
-        date: new Date(),
+        date: '',
         description: '',
+        thumbnail: file,
         status: 'à venir',
         owner: owner ? owner.id : null,
         max_capacity: 0,
@@ -22,8 +23,25 @@ export default function Create({ owner }: { owner: User }) {
 
     const [selectedStatus, setSelectedStatus] = useState(data.status);
 
+    useEffect(() => {
+        if (!data.date) {
+            const now = new Date();
+            const nowString = now.toISOString().slice(0, 16);
+            setData('date', nowString);
+        }
+    }, []);
+
+
     const submit: React.FormEventHandler = (e) => {
         e.preventDefault();
+
+        const selectedDateTime = new Date(data.date);
+        const now = new Date();
+
+        if (selectedDateTime < now) {
+            errors.date = 'La date et l\'heure ne peuvent pas être antérieures à la date et l\'heure actuelles.';
+            return;
+        }
 
         console.log(data);
 
@@ -32,11 +50,17 @@ export default function Create({ owner }: { owner: User }) {
         });
     };
 
+    const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target?.files?.[0];
+        if (file) setData('thumbnail', file);
+    };
+
     return (
         <AuthenticatedLayout>
             <Head title="Espace Membre : Création de Repas" />
             <h1 className="text-2xl font-bold title pb-10">Création de repas</h1>
             <form onSubmit={submit} >
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <Label htmlFor="name" className="block text-sm font-medium">Nom du repas</Label>
@@ -83,22 +107,14 @@ export default function Create({ owner }: { owner: User }) {
                     <div>
                         <Label htmlFor="date" className="block text-sm font-medium">Date</Label>
                         <Input
-                            type="date"
+                            type="datetime-local"
                             name="date"
                             id="date"
-                            value={Number(data.date) || ''}
-                            onChange={(e) => {
-                                const date = e.target.value;
-                                if (new Date(date) < new Date()) {
-                                    setData('date', '');
-                                    errors.date = 'La date ne peut pas être inférieure à la date du jour.';
-                                } else {
-                                    setData('date', date);
-                                    errors.date = '';
-                                }
-                            }}
+                            value={data.date}
+                            onChange={(e) => setData('date', e.target.value)}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
+
                         {errors.date && <div className="text-sm text-red-600">{errors.date}</div>}
                     </div>
                     <div>
@@ -112,6 +128,17 @@ export default function Create({ owner }: { owner: User }) {
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         {errors.description && <div className="text-sm text-red-600">{errors.description}</div>}
+                    </div>
+                    <div>
+                        <Label htmlFor="thumbnail" className="block text-sm font-medium">Image du repas</Label>
+                        <Input
+                            type="file"
+                            name="thumbnail"
+                            id="thumbnail"
+                            onChange={(e) => handleThumbnailChange(e)}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                        {errors.thumbnail && <div className="text-sm text-red-600">{errors.thumbnail}</div>}
                     </div>
                     <div>
                         <Label htmlFor="status" className="block text-sm font-medium">Statut</Label>
